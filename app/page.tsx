@@ -1,1 +1,1621 @@
 
+export default function HomePage() {
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --dark: #0E0E0E;
+      --dark2: #181818;
+      --dark3: #222222;
+      --cream: #F5F0E8;
+      --cream2: #EDE5D3;
+      --text: #2A2A2A;
+      --text-muted: #6B6560;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(14,14,14,0.96);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 59px,
+          rgba(201,168,76,0.04) 60px
+        );
+    }
+
+    .hero-content {
+      padding: 140px 6% 80px 8%;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 2;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.8rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.62);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-secondary {
+      border: 1px solid rgba(201,168,76,0.5);
+      color: var(--gold);
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.2rem; }
+
+    .hero-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-visual-inner {
+      width: 80%;
+      max-width: 420px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 2.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .service-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .service-item:last-child { border-bottom: none; }
+
+    .service-icon {
+      width: 38px; height: 38px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .service-item h4 { font-size: 0.9rem; color: var(--white); font-weight: 700; }
+    .service-item p { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.1rem; }
+
+    /* ── SERVIÇOS ── */
+    .services {
+      padding: 6rem 8%;
+      background: var(--cream);
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .section-tag::after {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: var(--cream2);
+      border: 1.5px solid var(--cream2);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .service-card:hover { background: var(--cream); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── COMO FUNCIONA ── */
+    .como-funciona {
+      background: var(--dark);
+      padding: 6rem 8%;
+      position: relative;
+      overflow: hidden;
+    }
+    .como-funciona::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.06);
+    }
+    .como-funciona .section-title { color: var(--white); }
+    .como-funciona .section-sub { color: rgba(255,255,255,0.5); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-top: 3.5rem;
+    }
+
+    .step {
+      background: var(--dark2);
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(201,168,76,0.12);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+    }
+
+    .step p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+    }
+
+    .step-gold { border-top: 3px solid var(--gold); }
+
+    /* ── EQUIPE ── */
+    .equipe {
+      padding: 6rem 8% 5rem;
+      background: var(--cream);
+      text-align: center;
+    }
+    .equipe .section-tag { justify-content: center; }
+    .equipe .section-title { margin-bottom: 1rem; }
+    .equipe .section-sub { margin: 0 auto 3rem; }
+    .equipe-photo {
+      max-width: 960px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid var(--cream2);
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(14,14,14,0.25);
+    }
+
+    /* ── POR QUE NÓS ── */
+    .por-que {
+      padding: 6rem 8%;
+      background: var(--cream2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .por-que-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+
+    .por-que-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .check {
+      width: 22px; height: 22px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.7rem;
+      color: var(--dark);
+    }
+    .por-que-item p { font-size: 0.95rem; line-height: 1.6; color: var(--text); }
+    .por-que-item strong { color: var(--text); }
+
+    .depoimento-box {
+      background: var(--dark);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .depoimento-box::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,0.08);
+      position: absolute;
+      top: -10px; left: 20px;
+      line-height: 1;
+    }
+    .depoimento-box blockquote {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.75);
+      font-style: italic;
+      position: relative; z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+    .depoimento-author { display: flex; align-items: center; gap: 1rem; }
+    .avatar {
+      width: 46px; height: 46px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1.1rem;
+    }
+    .author-name { color: var(--white); font-size: 0.9rem; font-weight: 700; }
+    .author-city { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--gold);
+      padding: 5rem 8%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 19px,
+        rgba(0,0,0,0.04) 20px
+      );
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark);
+      font-weight: 900;
+      position: relative; z-index: 1;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 1.05rem;
+      color: rgba(14,14,14,0.7);
+      position: relative; z-index: 1;
+      margin-bottom: 2rem;
+    }
+    .btn-dark {
+      background: var(--dark);
+      color: var(--gold);
+      padding: 1rem 2.5rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: #111; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 3rem 8% 2rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .footer-col h4 { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-content { padding: 120px 6% 60px; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      nav .nav-links { display: none; }
+      .por-que { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
+  ` }} />
+      <div dangerouslySetInnerHTML={{ __html: `<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logoT.png" alt="Inventariano – Direito de Sucessões e Regularização de Imóveis" style="height:48px;width:auto;display:block;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="/inventario.html">Inventário</a></li>
+    <li><a href="/regularizacao.html">Regularização</a></li>
+    <li><a href="#equipe">Nossa Equipe</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="#contato" class="nav-cta">Consulta Gratuita</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Escritório Especializado</div>
+    <h1>Inventário e<br/><em>Regularização</em><br/>de Imóveis</h1>
+    <p class="hero-desc">Resolvemos sua herança com segurança, agilidade e transparência. Do inventário judicial ao extrajudicial — cuidamos de cada etapa por você.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5511993233066?text=Olá!%20Gostaria%20de%20uma%20consulta%20sobre%20inventário." class="btn-primary" target="_blank">
+        💬 Falar no WhatsApp
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Conheça nossos serviços
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Casos concluídos</div>
+      </div>
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Clientes satisfeitos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <div class="hero-card">
+        <div style="text-align:center;margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(201,168,76,0.2);">
+          <img src="logoT.png" alt="Inventariano" style="height:80px;width:auto;" />
+        </div>
+        <div class="hero-card-title" style="border-top:none;margin-top:0;">Nossa Especialidade</div>
+        <div class="service-item">
+          <div class="service-icon">⚖️</div>
+          <div>
+            <h4>Inventário Judicial</h4>
+            <p>Para casos com litígio ou herdeiros menores</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">📋</div>
+          <div>
+            <h4>Inventário Extrajudicial</h4>
+            <p>Rápido, via cartório, sem processo judicial</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">🏠</div>
+          <div>
+            <h4>Regularização de Imóveis</h4>
+            <p>Escritura, registro e usucapião</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">📜</div>
+          <div>
+            <h4>Planejamento Sucessório</h4>
+            <p>Doação em vida e testamento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="services" id="servicos">
+  <div class="section-tag">O que fazemos</div>
+  <h2 class="section-title">Soluções jurídicas<br/>completas para sua família</h2>
+  <p class="section-sub">Cada caso é único. Nossa equipe cuida de toda a parte burocrática para que você possa focar no que realmente importa.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="card-icon">⚖️</div>
+      <h3>Inventário Judicial</h3>
+      <p>Quando há conflito entre herdeiros, menores de idade ou testamento contestado, atuamos com expertise para resolver com eficiência perante o juiz.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">📋</div>
+      <h3>Inventário Extrajudicial</h3>
+      <p>A forma mais rápida e econômica para partilhar bens quando não há litígio. Realizamos todo o processo via cartório em tempo recorde.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🏠</div>
+      <h3>Regularização de Imóveis</h3>
+      <p>Imóvel sem escritura, registro ou documentação irregular? Cuidamos de toda a regularização para garantir sua segurança jurídica.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🔑</div>
+      <h3>Usucapião</h3>
+      <p>Você mora há anos em um imóvel sem documentação? A usucapião garante seu direito de propriedade. Analisamos seu caso sem custo inicial.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">📜</div>
+      <h3>Testamento e Doação</h3>
+      <p>Planeje com antecedência a transmissão do seu patrimônio, protegendo sua família e reduzindo custos futuros de inventário.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🤝</div>
+      <h3>Partilha Amigável</h3>
+      <p>Mediamos acordos entre herdeiros para uma partilha justa e harmoniosa, evitando conflitos e processos judiciais desnecessários.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como-funciona" id="como-funciona">
+  <div class="section-tag" style="color: var(--gold);">Processo</div>
+  <h2 class="section-title" style="color: var(--white);">Como resolvemos<br/>seu caso</h2>
+  <p class="section-sub">Um processo simples, transparente e sem surpresas do início ao fim.</p>
+
+  <div class="steps">
+    <div class="step step-gold">
+      <div class="step-num">01</div>
+      <h3>Consulta Gratuita</h3>
+      <p>Entre em contato pelo WhatsApp ou formulário. Analisamos seu caso sem custo e sem compromisso.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Análise Documental</h3>
+      <p>Levantamos todos os documentos necessários e mapeamos o caminho mais rápido para o seu caso.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Proposta Clara</h3>
+      <p>Apresentamos os honorários e prazo estimado com total transparência, sem cobranças surpresa.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Execução e Resultado</h3>
+      <p>Cuidamos de tudo. Você acompanha o progresso e recebe os documentos finais sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section class="equipe" id="equipe">
+  <div class="section-tag">Quem cuida do seu caso</div>
+  <h2 class="section-title">Nossa Equipe</h2>
+  <p class="section-sub">Advogados especializados em Direito Sucessório e Regularização de Imóveis, com experiência, ética e compromisso com os seus direitos.</p>
+  <img src="equipe.png" alt="Equipe Motta Alves Sociedade de Advogados — Dra. Maria Antônia Motta (OAB/SP 146.857) e Dr. Vanderlei Alves (OAB/SP 270.182)" class="equipe-photo" />
+</section>
+
+<!-- POR QUE NÓS -->
+<section class="por-que" id="sobre">
+  <div>
+    <div class="section-tag">Por que nos escolher</div>
+    <h2 class="section-title">Especialistas onde<br/>outros generalizam</h2>
+    <ul class="por-que-list">
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Foco total em inventários e imóveis</strong> — não somos escritório genérico. Toda nossa estrutura é voltada para essa área.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Atendimento em todo o Brasil</strong> — processos extrajudiciais e consultoria online para clientes de qualquer estado.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Honorários justos e parcelados</strong> — trabalhamos com condições acessíveis para que a burocracia não seja um obstáculo financeiro.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Prazo cumprido</strong> — nos comprometemos com prazos realistas e mantemos você informado em cada etapa.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="depoimento-box">
+      <blockquote>
+        "Após anos tentando resolver o inventário do meu pai sozinha, o escritório Inventariano resolveu tudo em menos de 4 meses. Foram transparentes, atenciosos e competentes do começo ao fim."
+      </blockquote>
+      <div class="depoimento-author">
+        <div class="avatar">M</div>
+        <div>
+          <div class="author-name">Maria Fernanda S.</div>
+          <div class="author-city">São Paulo – SP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <h2>Resolva hoje o que<br/>você adiou por anos</h2>
+  <p>Consulta gratuita, sem compromisso. Fale com um especialista agora.</p>
+  <a href="https://wa.me/5511993233066?text=Olá!%20Gostaria%20de%20uma%20consulta%20gratuita." class="btn-dark" target="_blank">
+    💬 Iniciar Consulta Gratuita
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="logoT.png" alt="Inventariano" style="height:90px;width:auto;display:block;margin-bottom:0.5rem;" />
+        <span style="font-family:'Lato',sans-serif;font-size:0.8rem;font-weight:300;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;">Motta Alves Sociedade de Advogados</span>
+      </div>
+      <p style="margin-top:0.8rem;">Especialistas em inventários judiciais e extrajudiciais, regularização de imóveis e planejamento sucessório.</p>
+      <p style="margin-top:1rem;">
+        📍 Rua Prof. Abraão de Morais, 1919<br/>
+        Jardim Saúde – São Paulo/SP<br/>
+        CEP 04123-011
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#servicos">Inventário Judicial</a></li>
+        <li><a href="#servicos">Inventário Extrajudicial</a></li>
+        <li><a href="#servicos">Regularização de Imóveis</a></li>
+        <li><a href="#servicos">Usucapião</a></li>
+        <li><a href="#servicos">Testamento e Doação</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nossa Equipe</h4>
+      <ul>
+        <li style="margin-bottom:1.2rem;">
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dr. Vanderlei Alves</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 270182</span><br/>
+          <a href="https://wa.me/5511993233066" target="_blank">(11) 99323-3066</a><br/>
+          <a href="mailto:dr.vanderlei.alves@inventariano.com.br">dr.vanderlei.alves@inventariano.com.br</a>
+        </li>
+        <li>
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dra. Maria Antonia Motta</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 146857</span><br/>
+          <a href="https://wa.me/5511991818762" target="_blank">(11) 99181-8762</a><br/>
+          <a href="mailto:dra.maria.antonia@inventariano.com.br">dra.maria.antonia@inventariano.com.br</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Motta Alves Sociedade de Advogados. Todos os direitos reservados.</span>
+    <span>inventariano.com.br</span>
+  </div>
+</footer>` }} />
+    </>
+  );
+}
+export default function HomePage() {
+  return (
+    <>
+      <style dangerouslySetInnerHTML={{ __html: `
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --dark: #0E0E0E;
+      --dark2: #181818;
+      --dark3: #222222;
+      --cream: #F5F0E8;
+      --cream2: #EDE5D3;
+      --text: #2A2A2A;
+      --text-muted: #6B6560;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(14,14,14,0.96);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--white); font-weight: 300; }
+
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 59px,
+          rgba(201,168,76,0.04) 60px
+        );
+    }
+
+    .hero-content {
+      padding: 140px 6% 80px 8%;
+      display: flex; flex-direction: column; justify-content: center;
+      position: relative; z-index: 2;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.75rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 1.8rem;
+    }
+    .hero-tag::before {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 4.5vw, 4rem);
+      font-weight: 900;
+      line-height: 1.12;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.62);
+      max-width: 440px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+    .btn-secondary {
+      border: 1px solid rgba(201,168,76,0.5);
+      color: var(--gold);
+      padding: 0.9rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-secondary:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700;
+      color: var(--gold);
+    }
+    .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em; text-transform: uppercase; margin-top: 0.2rem; }
+
+    .hero-visual {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-visual-inner {
+      width: 80%;
+      max-width: 420px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 4px;
+      padding: 2.5rem;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .service-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .service-item:last-child { border-bottom: none; }
+
+    .service-icon {
+      width: 38px; height: 38px;
+      background: rgba(201,168,76,0.1);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+
+    .service-item h4 { font-size: 0.9rem; color: var(--white); font-weight: 700; }
+    .service-item p { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.1rem; }
+
+    /* ── SERVIÇOS ── */
+    .services {
+      padding: 6rem 8%;
+      background: var(--cream);
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex; align-items: center; gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+    .section-tag::after {
+      content: '';
+      display: block; width: 32px; height: 1px;
+      background: var(--gold);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.7;
+      margin-bottom: 3.5rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5px;
+      background: var(--cream2);
+      border: 1.5px solid var(--cream2);
+    }
+
+    .service-card {
+      background: var(--white);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+    .service-card:hover { background: var(--cream); }
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ── COMO FUNCIONA ── */
+    .como-funciona {
+      background: var(--dark);
+      padding: 6rem 8%;
+      position: relative;
+      overflow: hidden;
+    }
+    .como-funciona::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.06);
+    }
+    .como-funciona .section-title { color: var(--white); }
+    .como-funciona .section-sub { color: rgba(255,255,255,0.5); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-top: 3.5rem;
+    }
+
+    .step {
+      background: var(--dark2);
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 900;
+      color: rgba(201,168,76,0.12);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .step h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--white);
+      margin-bottom: 0.7rem;
+    }
+
+    .step p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.65;
+    }
+
+    .step-gold { border-top: 3px solid var(--gold); }
+
+    /* ── EQUIPE ── */
+    .equipe {
+      padding: 6rem 8% 5rem;
+      background: var(--cream);
+      text-align: center;
+    }
+    .equipe .section-tag { justify-content: center; }
+    .equipe .section-title { margin-bottom: 1rem; }
+    .equipe .section-sub { margin: 0 auto 3rem; }
+    .equipe-photo {
+      max-width: 960px;
+      width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid var(--cream2);
+      border-radius: 6px;
+      box-shadow: 0 20px 50px rgba(14,14,14,0.25);
+    }
+
+    /* ── POR QUE NÓS ── */
+    .por-que {
+      padding: 6rem 8%;
+      background: var(--cream2);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+
+    .por-que-list { list-style: none; display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+
+    .por-que-item {
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .check {
+      width: 22px; height: 22px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-size: 0.7rem;
+      color: var(--dark);
+    }
+    .por-que-item p { font-size: 0.95rem; line-height: 1.6; color: var(--text); }
+    .por-que-item strong { color: var(--text); }
+
+    .depoimento-box {
+      background: var(--dark);
+      border-radius: 4px;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .depoimento-box::before {
+      content: '"';
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem;
+      color: rgba(201,168,76,0.08);
+      position: absolute;
+      top: -10px; left: 20px;
+      line-height: 1;
+    }
+    .depoimento-box blockquote {
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.75);
+      font-style: italic;
+      position: relative; z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+    .depoimento-author { display: flex; align-items: center; gap: 1rem; }
+    .avatar {
+      width: 46px; height: 46px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--dark);
+      font-size: 1.1rem;
+    }
+    .author-name { color: var(--white); font-size: 0.9rem; font-weight: 700; }
+    .author-city { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: var(--gold);
+      padding: 5rem 8%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 19px,
+        rgba(0,0,0,0.04) 20px
+      );
+    }
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--dark);
+      font-weight: 900;
+      position: relative; z-index: 1;
+      margin-bottom: 1rem;
+    }
+    .cta-section p {
+      font-size: 1.05rem;
+      color: rgba(14,14,14,0.7);
+      position: relative; z-index: 1;
+      margin-bottom: 2rem;
+    }
+    .btn-dark {
+      background: var(--dark);
+      color: var(--gold);
+      padding: 1rem 2.5rem;
+      border-radius: 2px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.05em;
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: #111; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 3rem 8% 2rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 1.5rem;
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .footer-col h4 { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .hero-content { padding: 120px 6% 60px; }
+      .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+      nav .nav-links { display: none; }
+      .por-que { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * { animation: fadeUp 0.7s ease both; }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
+  ` }} />
+      <div dangerouslySetInnerHTML={{ __html: `<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logoT.png" alt="Inventariano – Direito de Sucessões e Regularização de Imóveis" style="height:48px;width:auto;display:block;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="/inventario.html">Inventário</a></li>
+    <li><a href="/regularizacao.html">Regularização</a></li>
+    <li><a href="#equipe">Nossa Equipe</a></li>
+    <li><a href="/blog.html">Blog</a></li>
+    <li><a href="#contato" class="nav-cta">Consulta Gratuita</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Escritório Especializado</div>
+    <h1>Inventário e<br/><em>Regularização</em><br/>de Imóveis</h1>
+    <p class="hero-desc">Resolvemos sua herança com segurança, agilidade e transparência. Do inventário judicial ao extrajudicial — cuidamos de cada etapa por você.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5511993233066?text=Olá!%20Gostaria%20de%20uma%20consulta%20sobre%20inventário." class="btn-primary" target="_blank">
+        💬 Falar no WhatsApp
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Conheça nossos serviços
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Casos concluídos</div>
+      </div>
+      <div>
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-num">98%</div>
+        <div class="stat-label">Clientes satisfeitos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-visual-inner">
+      <div class="hero-card">
+        <div style="text-align:center;margin-bottom:1.5rem;padding-bottom:1.2rem;border-bottom:1px solid rgba(201,168,76,0.2);">
+          <img src="logoT.png" alt="Inventariano" style="height:80px;width:auto;" />
+        </div>
+        <div class="hero-card-title" style="border-top:none;margin-top:0;">Nossa Especialidade</div>
+        <div class="service-item">
+          <div class="service-icon">⚖️</div>
+          <div>
+            <h4>Inventário Judicial</h4>
+            <p>Para casos com litígio ou herdeiros menores</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">📋</div>
+          <div>
+            <h4>Inventário Extrajudicial</h4>
+            <p>Rápido, via cartório, sem processo judicial</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">🏠</div>
+          <div>
+            <h4>Regularização de Imóveis</h4>
+            <p>Escritura, registro e usucapião</p>
+          </div>
+        </div>
+        <div class="service-item">
+          <div class="service-icon">📜</div>
+          <div>
+            <h4>Planejamento Sucessório</h4>
+            <p>Doação em vida e testamento</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="services" id="servicos">
+  <div class="section-tag">O que fazemos</div>
+  <h2 class="section-title">Soluções jurídicas<br/>completas para sua família</h2>
+  <p class="section-sub">Cada caso é único. Nossa equipe cuida de toda a parte burocrática para que você possa focar no que realmente importa.</p>
+
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="card-icon">⚖️</div>
+      <h3>Inventário Judicial</h3>
+      <p>Quando há conflito entre herdeiros, menores de idade ou testamento contestado, atuamos com expertise para resolver com eficiência perante o juiz.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">📋</div>
+      <h3>Inventário Extrajudicial</h3>
+      <p>A forma mais rápida e econômica para partilhar bens quando não há litígio. Realizamos todo o processo via cartório em tempo recorde.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🏠</div>
+      <h3>Regularização de Imóveis</h3>
+      <p>Imóvel sem escritura, registro ou documentação irregular? Cuidamos de toda a regularização para garantir sua segurança jurídica.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🔑</div>
+      <h3>Usucapião</h3>
+      <p>Você mora há anos em um imóvel sem documentação? A usucapião garante seu direito de propriedade. Analisamos seu caso sem custo inicial.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">📜</div>
+      <h3>Testamento e Doação</h3>
+      <p>Planeje com antecedência a transmissão do seu patrimônio, protegendo sua família e reduzindo custos futuros de inventário.</p>
+    </div>
+    <div class="service-card">
+      <div class="card-icon">🤝</div>
+      <h3>Partilha Amigável</h3>
+      <p>Mediamos acordos entre herdeiros para uma partilha justa e harmoniosa, evitando conflitos e processos judiciais desnecessários.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="como-funciona" id="como-funciona">
+  <div class="section-tag" style="color: var(--gold);">Processo</div>
+  <h2 class="section-title" style="color: var(--white);">Como resolvemos<br/>seu caso</h2>
+  <p class="section-sub">Um processo simples, transparente e sem surpresas do início ao fim.</p>
+
+  <div class="steps">
+    <div class="step step-gold">
+      <div class="step-num">01</div>
+      <h3>Consulta Gratuita</h3>
+      <p>Entre em contato pelo WhatsApp ou formulário. Analisamos seu caso sem custo e sem compromisso.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Análise Documental</h3>
+      <p>Levantamos todos os documentos necessários e mapeamos o caminho mais rápido para o seu caso.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Proposta Clara</h3>
+      <p>Apresentamos os honorários e prazo estimado com total transparência, sem cobranças surpresa.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h3>Execução e Resultado</h3>
+      <p>Cuidamos de tudo. Você acompanha o progresso e recebe os documentos finais sem burocracia.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section class="equipe" id="equipe">
+  <div class="section-tag">Quem cuida do seu caso</div>
+  <h2 class="section-title">Nossa Equipe</h2>
+  <p class="section-sub">Advogados especializados em Direito Sucessório e Regularização de Imóveis, com experiência, ética e compromisso com os seus direitos.</p>
+  <img src="equipe.png" alt="Equipe Motta Alves Sociedade de Advogados — Dra. Maria Antônia Motta (OAB/SP 146.857) e Dr. Vanderlei Alves (OAB/SP 270.182)" class="equipe-photo" />
+</section>
+
+<!-- POR QUE NÓS -->
+<section class="por-que" id="sobre">
+  <div>
+    <div class="section-tag">Por que nos escolher</div>
+    <h2 class="section-title">Especialistas onde<br/>outros generalizam</h2>
+    <ul class="por-que-list">
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Foco total em inventários e imóveis</strong> — não somos escritório genérico. Toda nossa estrutura é voltada para essa área.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Atendimento em todo o Brasil</strong> — processos extrajudiciais e consultoria online para clientes de qualquer estado.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Honorários justos e parcelados</strong> — trabalhamos com condições acessíveis para que a burocracia não seja um obstáculo financeiro.</p>
+      </li>
+      <li class="por-que-item">
+        <div class="check">✓</div>
+        <p><strong>Prazo cumprido</strong> — nos comprometemos com prazos realistas e mantemos você informado em cada etapa.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <div class="depoimento-box">
+      <blockquote>
+        "Após anos tentando resolver o inventário do meu pai sozinha, o escritório Inventariano resolveu tudo em menos de 4 meses. Foram transparentes, atenciosos e competentes do começo ao fim."
+      </blockquote>
+      <div class="depoimento-author">
+        <div class="avatar">M</div>
+        <div>
+          <div class="author-name">Maria Fernanda S.</div>
+          <div class="author-city">São Paulo – SP</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contato">
+  <h2>Resolva hoje o que<br/>você adiou por anos</h2>
+  <p>Consulta gratuita, sem compromisso. Fale com um especialista agora.</p>
+  <a href="https://wa.me/5511993233066?text=Olá!%20Gostaria%20de%20uma%20consulta%20gratuita." class="btn-dark" target="_blank">
+    💬 Iniciar Consulta Gratuita
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="logoT.png" alt="Inventariano" style="height:90px;width:auto;display:block;margin-bottom:0.5rem;" />
+        <span style="font-family:'Lato',sans-serif;font-size:0.8rem;font-weight:300;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;">Motta Alves Sociedade de Advogados</span>
+      </div>
+      <p style="margin-top:0.8rem;">Especialistas em inventários judiciais e extrajudiciais, regularização de imóveis e planejamento sucessório.</p>
+      <p style="margin-top:1rem;">
+        📍 Rua Prof. Abraão de Morais, 1919<br/>
+        Jardim Saúde – São Paulo/SP<br/>
+        CEP 04123-011
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#servicos">Inventário Judicial</a></li>
+        <li><a href="#servicos">Inventário Extrajudicial</a></li>
+        <li><a href="#servicos">Regularização de Imóveis</a></li>
+        <li><a href="#servicos">Usucapião</a></li>
+        <li><a href="#servicos">Testamento e Doação</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nossa Equipe</h4>
+      <ul>
+        <li style="margin-bottom:1.2rem;">
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dr. Vanderlei Alves</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 270182</span><br/>
+          <a href="https://wa.me/5511993233066" target="_blank">(11) 99323-3066</a><br/>
+          <a href="mailto:dr.vanderlei.alves@inventariano.com.br">dr.vanderlei.alves@inventariano.com.br</a>
+        </li>
+        <li>
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dra. Maria Antonia Motta</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 146857</span><br/>
+          <a href="https://wa.me/5511991818762" target="_blank">(11) 99181-8762</a><br/>
+          <a href="mailto:dra.maria.antonia@inventariano.com.br">dra.maria.antonia@inventariano.com.br</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Motta Alves Sociedade de Advogados. Todos os direitos reservados.</span>
+    <span>inventariano.com.br</span>
+  </div>
+</footer>` }} />
+    </>
+  );
+}
