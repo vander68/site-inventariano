@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Inventário e Herança | Motta Alves Sociedade de Advogados</title>
+  <meta name="description" content="Regularize a herança e desbloqueie o patrimônio da sua família com segurança jurídica. Inventário extrajudicial e judicial, inclusive casos com imóveis irregulares e conflitos entre herdeiros." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ─── TOKENS ─────────────────────────────────────────── */
+    :root {
+      --cream:     #F4F0E8;
+      --warm:      #EDE7D9;
+      --white:     #FDFCFA;
+      --navy:      #1A2B3C;
+      --navy-deep: #111E2B;
+      --forest:    #1E3028;
+      --gold:      #B5893A;
+      --gold-lt:   #D4A85A;
+      --rust:      #8B3A2A;
+      --text:      #2C2C2C;
+      --muted:     #6A6A6A;
+      --border:    #D9D0BF;
+      --r:         4px;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'DM Sans', system-ui, sans-serif;
+    }
+
+    /* ─── RESET ──────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--sans); color: var(--text); background: var(--cream); overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    p { line-height: 1.7; }
+
+    /* ─── LAYOUT ─────────────────────────────────────────── */
+    .wrap  { width: 100%; max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    .sec   { padding: 72px 0; }
+    .sec--white  { background: var(--white); }
+    .sec--cream  { background: var(--cream); }
+    .sec--navy   { background: var(--navy); color: #fff; }
+    .sec--forest { background: var(--forest); color: #fff; }
+    .sec--warm   { background: var(--warm); }
+
+    /* ─── TYPE HELPERS ───────────────────────────────────── */
+    .lbl {
+      font-size: 11px; font-weight: 600; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 10px;
+    }
+    .lbl--lt { color: var(--gold-lt); }
+
+    .h1 {
+      font-family: var(--serif); font-weight: 600; line-height: 1.08;
+      font-size: clamp(34px, 7vw, 54px); letter-spacing: -.01em;
+    }
+    .h2 {
+      font-family: var(--serif); font-weight: 600; line-height: 1.15;
+      font-size: clamp(26px, 5vw, 40px);
+    }
+    .h2--lt { color: #fff; }
+    .sub { font-size: 16px; color: var(--muted); margin-top: 12px; line-height: 1.65; }
+    .sub--lt { color: rgba(255,255,255,.65); }
+
+    /* ─── BUTTONS ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px; font-family: var(--sans); font-weight: 600; font-size: 15px;
+      letter-spacing: .02em; border-radius: var(--r); padding: 16px 32px;
+      cursor: pointer; border: none; transition: all .25s ease;
+    }
+    .btn--gold  { background: var(--gold); color: #fff; box-shadow: 0 4px 20px rgba(181,137,58,.35); }
+    .btn--gold:hover { background: var(--gold-lt); transform: translateY(-1px); box-shadow: 0 6px 28px rgba(181,137,58,.45); }
+    .btn--ghost { background: transparent; color: var(--gold); border: 1.5px solid var(--gold); }
+    .btn--ghost:hover { background: rgba(181,137,58,.08); }
+    .btn--full  { width: 100%; }
+    .btn--lg    { font-size: 17px; padding: 18px 36px; }
+    .btn svg    { width: 20px; height: 20px; flex-shrink: 0; }
+
+    .microcopy        { font-size: 12px; color: var(--muted); margin-top: 10px; text-align: center; }
+    .microcopy--lt    { color: rgba(255,255,255,.5); }
+
+    /* ─── TOP BAR ────────────────────────────────────────── */
+    .topbar {
+      background: var(--navy-deep); padding: 11px 24px; text-align: center;
+      font-size: 13px; color: rgba(255,255,255,.65); letter-spacing: .03em;
+    }
+    .topbar strong { color: var(--gold-lt); }
+
+    /* ─── HERO ───────────────────────────────────────────── */
+    .hero {
+      background: var(--forest);
+      padding: 68px 0 76px;
+      position: relative; overflow: hidden;
+    }
+    /* warm texture overlay */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 90% 20%, rgba(181,137,58,.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(181,137,58,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    /* decorative serif quote mark */
+    .hero::after {
+      content: '\201C';
+      font-family: var(--serif);
+      font-size: 320px;
+      line-height: 1;
+      color: rgba(255,255,255,.03);
+      position: absolute;
+      top: -40px; right: -10px;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero .wrap { position: relative; z-index: 1; }
+
+    .hero__eyebrow {
+      font-family: var(--sans); font-size: 11px; font-weight: 600;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--gold-lt);
+      margin-bottom: 18px; display: flex; align-items: center; gap: 10px;
+    }
+    .hero__eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--gold-lt); display: block; }
+
+    .hero__headline { color: #fff; margin-bottom: 6px; }
+    .hero__headline em { font-style: italic; color: var(--gold-lt); }
+    .hero__headline span { display: block; }
+
+    .hero__sub { font-size: 17px; line-height: 1.65; color: rgba(255,255,255,.72); margin: 20px 0 36px; max-width: 560px; }
+
+    .hero__cta { display: flex; flex-direction: column; gap: 12px; }
+
+    /* dual-audience badge row */
+    .audience-row {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px;
+    }
+    .audience-pill {
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,.7);
+    }
+
+    /* ─── TRUST ──────────────────────────────────────────── */
+    .trustbar {
+      background: var(--white);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .trustbar__inner {
+      display: flex; align-items: center; justify-content: center;
+      flex-wrap: wrap; gap: 20px 28px;
+    }
+    .ti {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 500; color: var(--navy);
+    }
+    .ti svg { color: var(--gold); width: 17px; height: 17px; }
+
+    /* ─── TWO-AUDIENCE CARDS ─────────────────────────────── */
+    .audience { background: var(--white); }
+    .audience__grid { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .acard {
+      border-radius: 6px; padding: 24px 22px; border: 1.5px solid var(--border);
+      position: relative; overflow: hidden;
+    }
+    .acard--a { border-color: rgba(181,137,58,.4); background: rgba(181,137,58,.04); }
+    .acard--b { border-color: rgba(26,43,60,.25); background: rgba(26,43,60,.03); }
+    .acard__tag {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; padding: 3px 10px;
+      border-radius: 2px; margin-bottom: 12px;
+    }
+    .acard--a .acard__tag { background: var(--gold); color: #fff; }
+    .acard--b .acard__tag { background: var(--navy); color: #fff; }
+    .acard h3 { font-family: var(--serif); font-size: 20px; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+    .acard ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .acard li { font-size: 13px; color: var(--muted); padding-left: 18px; position: relative; line-height: 1.5; }
+    .acard li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 12px; }
+
+    /* ─── FEAR SECTION ───────────────────────────────────── */
+    .fear { background: var(--navy); }
+    .fear__intro {
+      font-family: var(--serif); font-style: italic; font-size: 22px;
+      color: rgba(255,255,255,.85); line-height: 1.5; margin-bottom: 32px;
+      border-left: 3px solid var(--gold); padding-left: 20px;
+    }
+    .fear-grid { display: flex; flex-direction: column; gap: 12px; }
+    .fear-item {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: rgba(255,255,255,.05);
+      border-left: 3px solid rgba(181,137,58,.5);
+      padding: 16px 18px; border-radius: 0 var(--r) var(--r) 0;
+    }
+    .fear-icon { font-size: 22px; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .fear-item p { font-size: 15px; color: rgba(255,255,255,.8); line-height: 1.6; }
+    .fear-item strong { color: #fff; display: block; margin-bottom: 3px; font-size: 14px; }
+
+    /* ─── OBSTACLES / MECHANISM ──────────────────────────── */
+    .obstacles { background: var(--cream); }
+    .obstacle-reveal {
+      background: var(--navy); color: #fff; border-radius: 8px;
+      padding: 32px 28px; margin: 28px 0; position: relative; overflow: hidden;
+    }
+    .obstacle-reveal::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle at top right, rgba(181,137,58,.2), transparent 70%);
+      pointer-events: none;
+    }
+    .obstacle-reveal h3 {
+      font-family: var(--serif); font-size: 24px; font-weight: 600;
+      color: var(--gold-lt); margin-bottom: 12px;
+    }
+    .obstacle-reveal p { font-size: 15px; line-height: 1.7; color: rgba(255,255,255,.8); }
+
+    .obstacle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+    .ob-tag {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 14px 16px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .ob-tag span { font-size: 18px; flex-shrink: 0; }
+    .ob-tag p { font-size: 13px; color: var(--navy); font-weight: 500; line-height: 1.4; }
+
+    /* ─── SOLUTION ───────────────────────────────────────── */
+    .solution { background: var(--white); }
+    .sol-paths { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .sol-path {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px 18px; border: 1px solid var(--border);
+      border-radius: var(--r); background: var(--cream);
+      transition: box-shadow .2s;
+    }
+    .sol-path:hover { box-shadow: 0 4px 18px rgba(0,0,0,.07); }
+    .sol-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(181,137,58,.12); display: flex;
+      align-items: center; justify-content: center;
+      color: var(--gold); font-size: 18px; flex-shrink: 0;
+    }
+    .sol-path strong { display: block; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .sol-path p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── ANALYSIS CARD ──────────────────────────────────── */
+    .analysis { background: var(--forest); }
+    .analysis-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(181,137,58,.35);
+      border-radius: 8px; padding: 32px 28px; margin-top: 28px;
+    }
+    .analysis-card__title { font-family: var(--serif); font-size: 28px; font-weight: 600; color: var(--gold-lt); margin-bottom: 6px; }
+    .analysis-card__sub { font-size: 13px; color: rgba(255,255,255,.5); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 24px; }
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .check-item { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(255,255,255,.85); }
+    .ck {
+      width: 22px; height: 22px; background: var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: #fff;
+    }
+    .ck svg { width: 11px; height: 11px; }
+
+    /* ─── BENEFITS ───────────────────────────────────────── */
+    .benefits { background: var(--white); }
+    .ben-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .ben-card {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 20px; border: 1px solid var(--border); border-radius: var(--r);
+      background: var(--cream); transition: box-shadow .2s;
+    }
+    .ben-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,.07); background: var(--white); }
+    .ben-icon { font-size: 26px; flex-shrink: 0; margin-top: 2px; }
+    .ben-card strong { display: block; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
+    .ben-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── PROCESS ────────────────────────────────────────── */
+    .process { background: var(--cream); }
+    .steps { position: relative; display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+    .steps::before {
+      content: ''; position: absolute; left: 19px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .step { display: flex; gap: 20px; padding-bottom: 28px; position: relative; }
+    .step:last-child { padding-bottom: 0; }
+    .step__n {
+      width: 40px; height: 40px; background: var(--navy); color: var(--gold-lt);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--serif); font-size: 18px; font-weight: 600;
+      flex-shrink: 0; position: relative; z-index: 1; border: 2px solid var(--gold);
+    }
+    .step__body strong { display: block; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 3px; margin-top: 8px; }
+    .step__body p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ─── PROOF ──────────────────────────────────────────── */
+    .proof { background: var(--warm); }
+    .stats { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 32px; }
+    .stat {
+      flex: 1; min-width: 120px; background: var(--navy); color: #fff;
+      border-radius: var(--r); padding: 20px 14px; text-align: center;
+    }
+    .stat__n { font-family: var(--serif); font-size: 36px; font-weight: 600; color: var(--gold-lt); line-height: 1; }
+    .stat__l { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 6px; line-height: 1.4; }
+    .testimonials { display: flex; flex-direction: column; gap: 14px; }
+    .tcard {
+      background: var(--white); border-radius: var(--r); padding: 22px;
+      border-left: 3px solid var(--gold);
+    }
+    .tcard__q { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--navy); line-height: 1.65; margin-bottom: 12px; }
+    .tcard__a { font-size: 13px; font-weight: 600; color: var(--muted); }
+    .tcard--ph {
+      background: transparent; border: 1.5px dashed var(--border);
+      border-left: 1.5px dashed var(--border);
+      font-size: 13px; color: var(--muted); font-style: italic; text-align: center;
+    }
+
+    /* ─── FAQ ────────────────────────────────────────────── */
+    .faq-sec { background: var(--white); }
+    .faq { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-item:first-child { border-top: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      padding: 18px 0; font-family: var(--sans); font-size: 15px;
+      font-weight: 600; color: var(--navy); cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    }
+    .faq-q .fi {
+      width: 22px; height: 22px; border: 1.5px solid var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--gold); font-size: 16px; font-weight: 300;
+      transition: transform .25s;
+    }
+    .faq-item.open .fi { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 14px; line-height: 1.7; color: var(--muted);
+      max-height: 0; overflow: hidden; transition: max-height .35s ease, padding .25s;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 16px; }
+
+    /* ─── FINAL CTA ──────────────────────────────────────── */
+    .final { background: var(--navy); text-align: center; }
+    .final__h { font-family: var(--serif); font-size: clamp(28px, 5.5vw, 46px); font-weight: 600; color: #fff; line-height: 1.12; margin-bottom: 14px; }
+    .final__h em { font-style: italic; color: var(--gold-lt); }
+    .final__sub { font-size: 16px; color: rgba(255,255,255,.65); margin-bottom: 36px; line-height: 1.65; }
+
+    /* ─── FORM ───────────────────────────────────────────── */
+    .form-card { background: var(--white); border-radius: 8px; padding: 32px 24px; margin-top: 36px; text-align: left; }
+    .form-card h3 { font-family: var(--serif); font-size: 22px; color: var(--navy); margin-bottom: 6px; }
+    .form-card p  { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+    .fg { display: flex; flex-direction: column; gap: 12px; }
+    .ff { display: flex; flex-direction: column; gap: 6px; }
+    .ff label { font-size: 13px; font-weight: 600; color: var(--navy); }
+    .ff input, .ff textarea, .ff select {
+      padding: 12px 14px; border: 1.5px solid var(--border); border-radius: var(--r);
+      font-family: var(--sans); font-size: 15px; color: var(--text);
+      background: var(--cream); outline: none; transition: border-color .2s;
+    }
+    .ff input:focus, .ff textarea:focus, .ff select:focus { border-color: var(--gold); background: #fff; }
+    .ff textarea { resize: vertical; min-height: 80px; }
+    .consent { display: flex; align-items: flex-start; gap: 10px; margin-top: 2px; }
+    .consent input { margin-top: 3px; flex-shrink: 0; accent-color: var(--gold); }
+    .consent label { font-size: 12px; color: var(--muted); line-height: 1.5; }
+    .consent a { color: var(--gold); text-decoration: underline; }
+
+    /* ─── PS BLOCK ───────────────────────────────────────── */
+    .ps-block {
+      background: rgba(181,137,58,.09); border: 1px solid rgba(181,137,58,.28);
+      border-radius: var(--r); padding: 20px 22px; margin-top: 28px;
+    }
+    .ps-block p { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,.8); }
+    .ps-block strong { color: var(--gold-lt); }
+
+    /* ─── FOOTER ─────────────────────────────────────────── */
+    .footer { background: #0C1620; color: rgba(255,255,255,.45); padding: 32px 24px; text-align: center; }
+    .footer__logo { font-family: var(--serif); font-size: 20px; font-weight: 600; color: #fff; margin-bottom: 5px; }
+    .footer__oab  { font-size: 13px; color: var(--gold-lt); margin-bottom: 14px; }
+    .footer__links { font-size: 12px; }
+    .footer__links a { color: rgba(255,255,255,.35); margin: 0 8px; }
+    .footer__links a:hover { color: var(--gold-lt); }
+    .footer__copy { font-size: 11px; margin-top: 10px; color: rgba(255,255,255,.22); }
+
+    /* ─── FLOATING WA ────────────────────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 999;
+      background: #25D366; color: #fff; width: 56px; height: 56px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.45); transition: transform .2s;
+    }
+    .wa-float:hover { transform: scale(1.08); }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    /* ─── ANIMATIONS ─────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fu  { animation: fadeUp .7s ease both; }
+    .fu2 { animation: fadeUp .7s .15s ease both; }
+    .fu3 { animation: fadeUp .7s .3s ease both; }
+    .fu4 { animation: fadeUp .7s .45s ease both; }
+
+    /* ─── RESPONSIVE ─────────────────────────────────────── */
+    @media (min-width: 520px) {
+      .hero__cta { flex-direction: row; }
+      .obstacle-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 519px) {
+      .obstacle-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  Direito Sucessório · Inventário Extrajudicial e Judicial &nbsp;·&nbsp;
+  <strong>Dr. Vanderlei Azevedo Alves — OAB/SP 270.182 &nbsp;·&nbsp; Dra. Maria Antonia Motta — OAB/SP 146.857</strong>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="wrap">
+    <p class="hero__eyebrow fu">Inventário &amp; Herança</p>
+
+    <h1 class="h1 hero__headline fu2">
+      <span>Regularize a herança</span>
+      <em>e desbloqueie</em>
+      <span>o patrimônio</span>
+      <span>da sua família.</span>
+    </h1>
+
+    <p class="hero__sub fu3">
+      Cuidamos de todo o processo de inventário — judicial ou extrajudicial —
+      inclusive em casos com imóveis irregulares, conflitos entre herdeiros
+      e patrimônios complexos.
+    </p>
+
+    <div class="hero__cta fu4">
+      <a href="https://wa.me/5511993233066?text=Ol%C3%A1%2C%20preciso%20de%20orienta%C3%A7%C3%A3o%20sobre%20invent%C3%A1rio." class="btn btn--gold btn--lg">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.476a.75.75 0 00.918.919l5.701-1.497A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.187-1.38l-.371-.213-3.844 1.009 1.023-3.741-.228-.381A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Falar com Especialista
+      </a>
+      <a href="#contato" class="btn btn--ghost">Análise do Inventário</a>
+    </div>
+    <p class="microcopy microcopy--lt" style="margin-top:14px;">Análise gratuita · Sem compromisso · Atendimento em todo o Brasil</p>
+
+    <!-- situações capturadas -->
+    <div class="audience-row fu4">
+      <span class="audience-pill">Falecimento recente</span>
+      <span class="audience-pill">Inventário parado</span>
+      <span class="audience-pill">Imóvel bloqueado para venda</span>
+      <span class="audience-pill">Herdeiros em conflito</span>
+      <span class="audience-pill">Inventário antigo</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trustbar">
+  <div class="trustbar__inner wrap">
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>OAB/SP 270.182</div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>Todo o Brasil</div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Resposta em até 24h</div>
+    <div class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/></svg>Extrajudicial e Judicial</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DOIS PÚBLICOS
+══════════════════════════════════════════════════════════ -->
+<section class="audience sec sec--white">
+  <div class="wrap">
+    <p class="lbl">Você se encaixa aqui?</p>
+    <h2 class="h2">Dois perfis que chegam<br>até nós todos os dias</h2>
+    <div class="audience__grid">
+
+      <div class="acard acard--a">
+        <span class="acard__tag">Emergência</span>
+        <h3>Perda recente e não sei por onde começar</h3>
+        <ul>
+          <li>Acabei de perder um familiar e não sei quais são os prazos</li>
+          <li>Não sei se preciso ir ao cartório ou ao tribunal</li>
+          <li>Tenho medo de errar e perder dinheiro em multas</li>
+          <li>Quero resolver logo para não criar problemas na família</li>
+        </ul>
+      </div>
+
+      <div class="acard acard--b">
+        <span class="acard__tag">Patrimônio Travado</span>
+        <h3>Herança antiga que trava o que preciso fazer</h3>
+        <ul>
+          <li>Quero vender o imóvel herdado, mas não consigo</li>
+          <li>O inventário está aberto há anos e não avança</li>
+          <li>Os herdeiros não entram em acordo</li>
+          <li>O banco não financia porque a documentação está irregular</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     O MEDO REAL
+══════════════════════════════════════════════════════════ -->
+<section class="fear sec sec--navy">
+  <div class="wrap">
+    <p class="lbl lbl--lt">O que realmente assusta</p>
+    <h2 class="h2 h2--lt" style="margin-bottom:24px;">O problema raramente<br>é "não saber fazer o inventário"</h2>
+
+    <div class="fear__intro">
+      "O medo real é perder dinheiro, criar uma briga irreversível na família
+      ou ficar preso nesse processo por anos."
+    </div>
+
+    <div class="fear-grid">
+      <div class="fear-item">
+        <div class="fear-icon">💰</div>
+        <p><strong>Perda financeira</strong>O inventário atrasado gera multas, juros e impostos maiores. Cada mês que passa, o custo aumenta.</p>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon">👨‍👩‍👧</div>
+        <p><strong>Briga na família</strong>Heranças sem condução técnica viram disputas pessoais. Relações que levaram décadas para construir podem se romper em meses.</p>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon">⏳</div>
+        <p><strong>Processo sem fim</strong>Sem o caminho certo, o inventário arrasta por anos — travando vendas, financiamentos e a vida financeira de toda a família.</p>
+      </div>
+      <div class="fear-item">
+        <div class="fear-icon">🏠</div>
+        <p><strong>Imóvel bloqueado</strong>Você quer vender, financiar ou regularizar — mas tudo está parado porque o inventário não foi concluído.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     OBSTÁCULOS / MECANISMO ÚNICO
+══════════════════════════════════════════════════════════ -->
+<section class="obstacles sec sec--cream">
+  <div class="wrap">
+    <p class="lbl">Por que outros escritórios não resolvem</p>
+    <h2 class="h2">Resolvemos os obstáculos<br>que travam seu inventário</h2>
+    <p class="sub">A maioria dos inventários que chegam até nós estava parada por um desses motivos:</p>
+
+    <div class="obstacle-grid">
+      <div class="ob-tag"><span>🏠</span><p>Imóvel sem escritura</p></div>
+      <div class="ob-tag"><span>📄</span><p>Contrato de gaveta</p></div>
+      <div class="ob-tag"><span>📋</span><p>Matrícula irregular</p></div>
+      <div class="ob-tag"><span>🔍</span><p>Imóvel herdado sem registro</p></div>
+      <div class="ob-tag"><span>👤</span><p>Herdeiro desaparecido</p></div>
+      <div class="ob-tag"><span>🤝</span><p>União estável não reconhecida</p></div>
+      <div class="ob-tag"><span>🏢</span><p>Empresa familiar no espólio</p></div>
+      <div class="ob-tag"><span>🗺️</span><p>Patrimônio em vários estados</p></div>
+    </div>
+
+    <div class="obstacle-reveal">
+      <h3>Nossa vantagem estratégica</h3>
+      <p>
+        Como atuamos simultaneamente em <strong style="color:#fff;">inventário</strong> e
+        <strong style="color:#fff;">regularização imobiliária</strong>, resolvemos dentro do mesmo processo
+        situações que normalmente exigiriam dois escritórios diferentes — e que costumam ser o principal
+        motivo de um inventário ficar parado por anos.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CAMINHOS
+══════════════════════════════════════════════════════════ -->
+<section class="solution sec sec--white">
+  <div class="wrap">
+    <p class="lbl">O que fazemos</p>
+    <h2 class="h2">Soluções para cada<br>situação de herança</h2>
+
+    <div class="sol-paths">
+      <div class="sol-path">
+        <div class="sol-icon">⚡</div>
+        <div>
+          <strong>Inventário Extrajudicial (Cartório)</strong>
+          <p>Quando os herdeiros estão de acordo e não há testamento controverso, a via extrajudicial é mais rápida, mais econômica e evita o judiciário.</p>
+        </div>
+      </div>
+      <div class="sol-path">
+        <div class="sol-icon">⚖️</div>
+        <div>
+          <strong>Inventário Judicial</strong>
+          <p>Para casos com conflitos entre herdeiros, herdeiro incapaz, testamento contestado ou patrimônio complexo que exige decisão judicial.</p>
+        </div>
+      </div>
+      <div class="sol-path">
+        <div class="sol-icon">🔁</div>
+        <div>
+          <strong>Sobrepartilha</strong>
+          <p>Para bens que ficaram de fora de um inventário anterior. Regularizamos o que ficou pendente sem reabrir todo o processo.</p>
+        </div>
+      </div>
+      <div class="sol-path">
+        <div class="sol-icon">🏗️</div>
+        <div>
+          <strong>Inventários com Imóveis Irregulares</strong>
+          <p>Resolvemos a pendência documental do imóvel dentro do próprio processo sucessório, desbloqueando o inventário por completo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ANÁLISE INICIAL
+══════════════════════════════════════════════════════════ -->
+<section class="analysis sec sec--forest">
+  <div class="wrap">
+    <p class="lbl lbl--lt">Primeiro passo</p>
+    <h2 class="h2 h2--lt">Análise Estratégica<br>do Inventário</h2>
+    <p class="sub sub--lt">Antes de qualquer decisão, você entende exatamente o que está diante de você.</p>
+
+    <div class="analysis-card">
+      <div class="analysis-card__title">Você descobre:</div>
+      <div class="analysis-card__sub">Sem juridiquês · Transparência total</div>
+      <ul class="check-list">
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Qual caminho é mais rápido: cartório ou judicial</li>
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Quais são os custos reais envolvidos</li>
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Quais documentos serão necessários</li>
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Se há obstáculos jurídicos e como superá-los</li>
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Prazo estimado para cada etapa</li>
+        <li class="check-item"><span class="ck"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1,6 4,9 11,2"/></svg></span> Estratégia para preservar relações familiares</li>
+      </ul>
+    </div>
+
+    <div style="margin-top:32px;text-align:center;">
+      <a href="https://wa.me/5511993233066?text=Ol%C3%A1%2C%20preciso%20de%20an%C3%A1lise%20do%20meu%20invent%C3%A1rio." class="btn btn--gold btn--lg btn--full">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.476a.75.75 0 00.918.919l5.701-1.497A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.187-1.38l-.371-.213-3.844 1.009 1.023-3.741-.228-.381A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Solicitar Análise do Inventário
+      </a>
+      <p class="microcopy microcopy--lt">Gratuita · Sem compromisso · Resposta em até 24h</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     BENEFÍCIOS
+══════════════════════════════════════════════════════════ -->
+<section class="benefits sec sec--white">
+  <div class="wrap">
+    <p class="lbl">O que você conquista</p>
+    <h2 class="h2">O inventário concluído<br>muda tudo para sua família</h2>
+    <div class="ben-grid">
+      <div class="ben-card">
+        <div class="ben-icon">🔓</div>
+        <div>
+          <strong>Patrimônio desbloqueado</strong>
+          <p>Venda imóveis, acesse contas, transfira bens — tudo que estava parado volta a circular.</p>
+        </div>
+      </div>
+      <div class="ben-card">
+        <div class="ben-icon">🤝</div>
+        <div>
+          <strong>Conflitos familiares reduzidos</strong>
+          <p>Uma condução técnica e transparente reduz tensões e ajuda a preservar relações que importam.</p>
+        </div>
+      </div>
+      <div class="ben-card">
+        <div class="ben-icon">💸</div>
+        <div>
+          <strong>Custos sob controle</strong>
+          <p>Quanto antes o inventário é organizado, menores são as multas, juros e impactos fiscais.</p>
+        </div>
+      </div>
+      <div class="ben-card">
+        <div class="ben-icon">🏠</div>
+        <div>
+          <strong>Imóvel regularizado e disponível</strong>
+          <p>Pendências documentais resolvidas dentro do processo — sem travar em um segundo procedimento.</p>
+        </div>
+      </div>
+      <div class="ben-card">
+        <div class="ben-icon">📜</div>
+        <div>
+          <strong>Segurança jurídica definitiva</strong>
+          <p>Escrituras, matrículas e registros em ordem para você e para os próximos herdeiros.</p>
+        </div>
+      </div>
+      <div class="ben-card">
+        <div class="ben-icon">😮‍💨</div>
+        <div>
+          <strong>Encerramento de um capítulo difícil</strong>
+          <p>Finalizar o inventário é também encerrar um período de incerteza. Permite seguir em frente.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     PROCESSO
+══════════════════════════════════════════════════════════ -->
+<section class="process sec sec--cream">
+  <div class="wrap">
+    <p class="lbl">Como funciona</p>
+    <h2 class="h2">Você não precisa entender<br>de inventário. Nós entendemos.</h2>
+    <p class="sub">Da primeira ligação até a escritura definitiva — cada etapa conduzida com clareza.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step__n">1</div>
+        <div class="step__body">
+          <strong>Análise Estratégica</strong>
+          <p>Avaliamos o caso, mapeamos os bens, identificamos obstáculos e definimos o caminho mais rápido e econômico.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">2</div>
+        <div class="step__body">
+          <strong>Levantamento Documental</strong>
+          <p>Orientamos exatamente quais documentos reunir. Você não precisa adivinhar nada.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">3</div>
+        <div class="step__body">
+          <strong>Proposta Transparente</strong>
+          <p>Antes de assinar qualquer contrato, você conhece o custo total, o prazo estimado e a estratégia.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">4</div>
+        <div class="step__body">
+          <strong>Condução Integral do Processo</strong>
+          <p>Cuidamos de cartórios, registros, ITCMD, partilha e de qualquer irregularidade imobiliária envolvida.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step__n">5</div>
+        <div class="step__body">
+          <strong>Patrimônio Regularizado</strong>
+          <p>Cada herdeiro com sua parte formalizada, documentação em ordem, herança concluída.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     PROVA SOCIAL
+══════════════════════════════════════════════════════════ -->
+<section class="proof sec">
+  <div class="wrap">
+    <p class="lbl">Resultados reais</p>
+    <h2 class="h2">Famílias que superaram<br>o inventário</h2>
+
+    <div class="stats" style="margin-top:28px;">
+      <div class="stat"><div class="stat__n">15+</div><div class="stat__l">inventários concluídos</div></div>
+      <div class="stat"><div class="stat__n">20</div><div class="stat__l">anos de atuação especializada</div></div>
+      <div class="stat"><div class="stat__n">SP</div><div class="stat__l">todo o país</div></div>
+    </div>
+
+    <div class="testimonials">
+      <div class="tcard tcard--ph">✏️ <em>[Inserir depoimento — foco em resultado: "consegui vender o imóvel após X anos travado" / "o inventário foi concluído em X meses"]</em> — Nome, Cidade/SP</div>
+      <div class="tcard tcard--ph">✏️ <em>[Inserir depoimento — foco em acolhimento e clareza: "finalmente alguém que explicou tudo sem complicar" / "não imaginei que seria possível resolver um inventário com imóvel irregular"]</em> — Nome, Cidade/SP</div>
+      <div class="tcard tcard--ph">✏️ <em>[Inserir depoimento — foco em conflito resolvido: "a família estava brigando há anos e conseguimos chegar a um acordo"]</em> — Nome, Cidade/SP</div>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:10px;font-style:italic;">Depoimentos serão inseridos com autorização expressa, conforme Provimento 205/2021 da OAB.</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FAQ / OBJEÇÕES
+══════════════════════════════════════════════════════════ -->
+<section class="faq-sec sec sec--white">
+  <div class="wrap">
+    <p class="lbl">Dúvidas frequentes</p>
+    <h2 class="h2">O que as famílias perguntam<br>antes de agir</h2>
+
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q">Vai custar muito caro?<span class="fi">+</span></button>
+        <div class="faq-a">O custo da demora costuma ser maior do que o da solução. Multas por inventário atrasado, imposto de transmissão e oportunidades perdidas somam muito mais do que o honorário de um advogado especializado. Após a análise, apresentamos uma proposta clara antes de qualquer compromisso.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Minha família não entra em acordo. Tem solução?<span class="fi">+</span></button>
+        <div class="faq-a">Nem todo inventário depende de consenso imediato. Existem mecanismos jurídicos para avançar mesmo diante de conflitos — e uma condução técnica e transparente costuma reduzir tensões ao longo do processo.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Já faz muitos anos que o familiar faleceu. Ainda dá?<span class="fi">+</span></button>
+        <div class="faq-a">Sim. Mesmo inventários muito antigos podem ser regularizados. O que muda com o tempo são os custos: multas e juros crescem quanto mais se aguarda. Por isso, o melhor momento para agir é agora.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">O imóvel herdado está irregular. Isso trava o inventário?<span class="fi">+</span></button>
+        <div class="faq-a">É um dos obstáculos mais comuns — e é exatamente para isso que nossa atuação integrada existe. Resolvemos a pendência imobiliária dentro do próprio processo sucessório, sem precisar de um procedimento separado.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Inventário extrajudicial é mesmo mais rápido?<span class="fi">+</span></button>
+        <div class="faq-a">Sim, quando a lei permite (herdeiros maiores e capazes, sem testamento controverso, todos de acordo). O processo em cartório é significativamente mais ágil e econômico. Verificamos na análise inicial se o seu caso se enquadra.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Preciso ir pessoalmente ao escritório?<span class="fi">+</span></button>
+        <div class="faq-a">Não necessariamente. O atendimento inicial pode ser feito remotamente. Parte do processo pode ser conduzida à distância, com orientação da nossa equipe sobre coleta de documentos. Atendemos em todo o Brasil.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Como funciona o pagamento dos honorários?<span class="fi">+</span></button>
+        <div class="faq-a">Os honorários são definidos após a análise do caso, com base na complexidade do processo. Apresentamos uma proposta completa antes de qualquer contratação — sem surpresas, sem cobranças escondidas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CTA FINAL + FORM
+══════════════════════════════════════════════════════════ -->
+<section class="final sec sec--navy" id="contato">
+  <div class="wrap">
+    <p class="lbl lbl--lt">Comece hoje</p>
+    <h2 class="final__h">
+      Você não precisa enfrentar<br>
+      o inventário <em>sozinho.</em>
+    </h2>
+    <p class="final__sub">
+      Fale com um especialista. Descreva sua situação. Descubra qual é o caminho mais rápido
+      e seguro para regularizar a herança da sua família.
+    </p>
+
+    <a href="https://wa.me/5511993233066?text=Ol%C3%A1%2C%20preciso%20de%20orienta%C3%A7%C3%A3o%20sobre%20invent%C3%A1rio." class="btn btn--gold btn--full btn--lg">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.476a.75.75 0 00.918.919l5.701-1.497A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.187-1.38l-.371-.213-3.844 1.009 1.023-3.741-.228-.381A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Falar com Especialista em Inventários
+    </a>
+    <p class="microcopy microcopy--lt">Análise gratuita · Sem compromisso · Atendimento em todo o Brasil</p>
+
+    <!-- FORM -->
+    <div class="form-card">
+      <h3>Ou envie seus dados</h3>
+      <p>Retornamos em até 24 horas para uma análise gratuita do inventário.</p>
+      <form class="fg" onsubmit="handleSubmit(event)">
+        <div class="ff">
+          <label for="nome">Seu nome *</label>
+          <input type="text" id="nome" name="nome" placeholder="Como prefere ser chamado?" required />
+        </div>
+        <div class="ff">
+          <label for="wa">WhatsApp *</label>
+          <input type="tel" id="wa" name="wa" placeholder="(11) 99999-9999" required />
+        </div>
+        <div class="ff">
+          <label for="sit">Descreva brevemente sua situação</label>
+          <textarea id="sit" name="sit" placeholder="Ex: meu pai faleceu há 2 anos e ainda não fizemos o inventário. Há um imóvel e uma conta bancária..."></textarea>
+        </div>
+        <div class="consent">
+          <input type="checkbox" id="lgpd" name="lgpd" required />
+          <label for="lgpd">Ao enviar, concordo com a <a href="#" target="_blank">Política de Privacidade</a> e com o tratamento dos meus dados conforme a LGPD.</label>
+        </div>
+        <button type="submit" class="btn btn--gold btn--full" style="margin-top:8px;">Solicitar Análise do Inventário →</button>
+      </form>
+    </div>
+
+    <!-- PS -->
+    <div class="ps-block">
+      <p>
+        <strong>P.S.</strong> — Cada mês sem agir é um mês com multas crescendo, oportunidades perdidas e relações familiares sob pressão. O inventário não some com o tempo — ele fica mais caro. O primeiro passo é gratuito e sem compromisso.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__logo">Motta Alves Sociedade de Advogados</div>
+  <div class="footer__oab">Dr. Vanderlei Azevedo Alves — OAB/SP 270.182 &nbsp;·&nbsp; Dra. Maria Antonia Motta — OAB/SP 146.857</div>
+  <div class="footer__links">
+    <a href="blog.html">Dúvidas &amp; Blog</a>
+    <a href="#">Política de Privacidade</a>
+    <a href="#">Termos de Uso</a>
+  </div>
+  <div class="footer__copy">
+    © 2025 Motta Alves Sociedade de Advogados. Todos os direitos reservados.<br>
+    Este site tem caráter informativo, em conformidade com o Provimento 205/2021 da OAB.
+  </div>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/5511993233066?text=Ol%C3%A1%2C%20preciso%20de%20orienta%C3%A7%C3%A3o%20sobre%20invent%C3%A1rio." class="wa-float" target="_blank" rel="noopener" title="Falar pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.531 5.845L.057 23.476a.75.75 0 00.918.919l5.701-1.497A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.187-1.38l-.371-.213-3.844 1.009 1.023-3.741-.228-.381A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+</a>
+
+<script>
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Form → WhatsApp
+  function handleSubmit(e) {
+    e.preventDefault();
+    const nome = document.getElementById('nome').value;
+    const sit  = document.getElementById('sit').value;
+    const msg  = encodeURIComponent(`Olá, meu nome é ${nome}. ${sit ? 'Situação: ' + sit : 'Gostaria de informações sobre inventário.'}`);
+    window.open(`https://wa.me/5511993233066?text=${msg}`, '_blank');
+  }
+
+  // Scroll reveal
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.ben-card, .sol-path, .step, .stat, .ob-tag, .acard').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    io.observe(el);
+  });
+</script>
+</body>
+</html>
