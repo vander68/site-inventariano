@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dúvidas &amp; Blog | Inventariano – Inventário e Regularização de Imóveis</title>
+  <meta name="description" content="Dúvidas frequentes e artigos sobre inventário, herança, usucapião e regularização de imóveis — sem juridiquês. Atendimento em todo o Brasil." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --dark: #0E0E0E;
+      --dark2: #181818;
+      --dark3: #222222;
+      --cream: #F5F0E8;
+      --cream2: #EDE5D3;
+      --text: #2A2A2A;
+      --text-muted: #6B6560;
+      --white: #FFFFFF;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(14,14,14,0.96);
+      backdrop-filter: blur(10px);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 70px;
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a.active { color: var(--gold); }
+    .nav-cta {
+      background: var(--gold);
+      color: var(--dark) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      font-weight: 700 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--dark) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--dark);
+      padding: 130px 8% 90px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 30%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(201,168,76,0.04) 60px);
+    }
+    .hero-inner { position: relative; z-index: 2; max-width: 820px; }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.6rem;
+    }
+    .hero-tag::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+      font-weight: 900; line-height: 1.15; color: var(--white); margin-bottom: 1.3rem;
+    }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero p { font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.62); max-width: 620px; }
+
+    /* ── TOOLBAR ── */
+    .toolbar { max-width: 900px; margin: -46px auto 0; padding: 0 6%; position: relative; z-index: 5; }
+    .searchcard {
+      background: var(--white);
+      border: 1.5px solid var(--cream2);
+      border-radius: 4px;
+      box-shadow: 0 20px 45px -25px rgba(0,0,0,0.4);
+      padding: 1.6rem 1.6rem 1.3rem;
+    }
+    .searchbox {
+      display: flex; align-items: center; gap: 0.8rem;
+      border: 1.5px solid var(--cream2); border-radius: 3px;
+      padding: 0.8rem 1rem; background: var(--cream);
+    }
+    .searchbox:focus-within { border-color: var(--gold); }
+    .searchbox svg { flex: none; opacity: 0.5; }
+    .searchbox input {
+      border: none; outline: none; background: transparent;
+      font-size: 1rem; width: 100%; font-family: inherit; color: var(--text);
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+    .chip {
+      border: 1.5px solid var(--cream2); background: var(--white);
+      color: var(--text-muted); padding: 0.5rem 1rem; border-radius: 2px;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em;
+      text-transform: uppercase; cursor: pointer; transition: all 0.18s; font-family: inherit;
+    }
+    .chip:hover { border-color: var(--gold); color: var(--text); }
+    .chip.active { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+
+    /* ── CONTENT ── */
+    main { max-width: 900px; margin: 0 auto; padding: 3rem 6% 2rem; }
+    .lead { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem, 3vw, 2rem); color: var(--text); margin: 0.5rem 0 0.2rem; font-weight: 700; }
+    .lead-sub { color: var(--text-muted); margin-bottom: 0.5rem; font-size: 0.95rem; }
+    .divider { display: flex; align-items: center; gap: 1rem; margin: 3.4rem 0 0.4rem; }
+    .divider::before, .divider::after { content: ''; height: 1px; background: var(--cream2); flex: 1; }
+    .divider span { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 1.9rem); color: var(--text); font-weight: 700; }
+    .group-title { font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin: 2.2rem 0 0.9rem; font-weight: 700; }
+    .faq { display: flex; flex-direction: column; gap: 0.7rem; }
+
+    details { background: var(--white); border: 1.5px solid var(--cream2); border-radius: 4px; overflow: hidden; transition: box-shadow 0.2s, border-color 0.2s; }
+    details[open] { box-shadow: 0 14px 34px -22px rgba(0,0,0,0.35); border-color: var(--gold); }
+    summary {
+      list-style: none; cursor: pointer; padding: 1.15rem 1.4rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      font-family: 'Playfair Display', serif; font-size: 1.12rem; font-weight: 700; color: var(--text);
+    }
+    summary::-webkit-details-marker { display: none; }
+    .q-ico {
+      flex: none; width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(201,168,76,0.16); color: var(--gold);
+      display: grid; place-items: center; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 1rem;
+      margin-top: 2px; transition: transform 0.25s, background 0.2s, color 0.2s;
+    }
+    details[open] .q-ico { transform: rotate(45deg); background: var(--gold); color: var(--dark); }
+    .answer { padding: 0 1.4rem 1.4rem 3.8rem; color: var(--text-muted); font-size: 0.98rem; line-height: 1.72; }
+    .answer p { margin-bottom: 0.8rem; }
+    .answer h4 { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--text); font-size: 1.05rem; margin: 1.1rem 0 0.5rem; }
+    .answer ul { margin: 0 0 0.8rem 1.2rem; }
+    .answer li { margin-bottom: 0.35rem; }
+    .answer strong { color: var(--text); }
+    .answer .tag { display: inline-block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.7rem; }
+    .answer .tip { background: var(--cream); border-left: 3px solid var(--gold); border-radius: 0 3px 3px 0; padding: 0.8rem 1rem; font-size: 0.92rem; margin-top: 0.4rem; }
+    .answer .art-cta { margin-top: 1rem; }
+    .answer .art-cta a { color: var(--text); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 1px; }
+    .answer .art-cta a:hover { color: var(--gold); }
+    .meta { padding: 0 1.4rem 0 3.8rem; margin-top: -0.2rem; margin-bottom: 0.2rem; }
+    .meta .badge { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--dark); background: var(--gold); padding: 0.2rem 0.7rem; border-radius: 2px; }
+    .noresult { text-align: center; color: var(--text-muted); padding: 2.5rem 0; display: none; }
+
+    /* ── CTA ── */
+    .cta-section { background: var(--gold); padding: 3.4rem 8%; text-align: center; position: relative; overflow: hidden; border-radius: 4px; margin: 3rem 6% 0; }
+    .cta-section::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(45deg, transparent, transparent 19px, rgba(0,0,0,0.04) 20px); }
+    .cta-section h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.6rem, 4vw, 2.4rem); color: var(--dark); font-weight: 900; position: relative; z-index: 1; margin-bottom: 0.8rem; }
+    .cta-section p { font-size: 1.02rem; color: rgba(14,14,14,0.7); position: relative; z-index: 1; margin-bottom: 1.6rem; }
+    .btn-dark { background: var(--dark); color: var(--gold); padding: 1rem 2.4rem; border-radius: 2px; text-decoration: none; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.05em; position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+    .btn-dark:hover { background: #111; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--dark); padding: 3rem 8% 2rem; border-top: 1px solid rgba(201,168,76,0.15); margin-top: 3rem; }
+    .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 1.5rem; }
+    .footer-logo { margin-bottom: 0.5rem; }
+    footer p { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.7; }
+    .footer-col h4 { color: var(--gold); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.5rem; }
+    .footer-col a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+    .footer-disc { font-size: 0.72rem; color: rgba(255,255,255,0.28); line-height: 1.6; margin-top: 1rem; }
+
+    @media (max-width: 768px) {
+      nav .nav-links a:not(.nav-cta) { display: none; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .answer { padding-left: 1.4rem; }
+      .meta { padding-left: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">
+    <img src="logoT.png" alt="Inventariano – Inventário e Regularização de Imóveis" style="height:48px;width:auto;display:block;" />
+  </a>
+  <ul class="nav-links">
+    <li><a href="/#servicos">Serviços</a></li>
+    <li><a href="/inventario.html">Inventário</a></li>
+    <li><a href="/regularizacao.html">Regularização</a></li>
+    <li><a href="/#sobre">Nossa Equipe</a></li>
+    <li><a href="/blog.html" class="active">Blog</a></li>
+    <li><a href="https://wa.me/5511993233066?text=Olá!%20Gostaria%20de%20falar%20com%20um%20especialista." class="nav-cta" target="_blank">Falar com Especialista</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">Dúvidas &amp; Blog</div>
+    <h1>Tudo sobre <em>herança e imóveis</em> — sem juridiquês</h1>
+    <p>Reunimos as dúvidas que mais chegam no nosso WhatsApp e os artigos do nosso blog num lugar só. Respostas rápidas, histórias reais e explicações que dá pra entender. Sem enrolação.</p>
+  </div>
+</section>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="searchcard">
+    <label class="searchbox">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search" type="search" placeholder="Buscar… ex: prazo, ITCMD, usucapião, alvará, união estável">
+    </label>
+    <div class="filters" id="filters">
+      <button class="chip active" data-f="all">Tudo</button>
+      <button class="chip" data-f="inventario">Inventário &amp; Herança</button>
+      <button class="chip" data-f="imoveis">Regularização de Imóveis</button>
+      <button class="chip" data-f="artigo">Só os artigos</button>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <div class="lead">Dúvidas rápidas</div>
+  <p class="lead-sub">As perguntas que todo mundo faz — clique para abrir a resposta.</p>
+
+  <section class="sec">
+    <div class="group-title">Inventário &amp; Herança</div>
+    <div class="faq">
+
+    <details data-cat="inventario" data-type="faq" data-k="preciso fazer inventário obrigatório poucos bens conta banco veículo transferir">
+      <summary><span class="q-ico">+</span>Meu pai faleceu e deixou pouca coisa. Preciso mesmo fazer inventário?</summary>
+      <div class="answer">
+        <span class="tag">Resposta rápida</span>
+        <p><strong>Na maioria dos casos, sim.</strong> Enquanto o inventário não é feito, os bens ficam “travados”: você não consegue vender o imóvel, transferir o carro pro seu nome nem, muitas vezes, sacar o que estava na conta. Legalmente, tudo isso vira um “espólio” — uma espécie de bolso coletivo dos herdeiros — até a partilha sair.</p>
+        <p>Existem atalhos para situações específicas (dinheiro parado em conta, PIS/FGTS, valores pequenos podem ter caminhos mais simples), mas para imóvel e veículo o inventário costuma ser inevitável.</p>
+        <div class="tip">A boa notícia: se todos os herdeiros estão de acordo e são maiores de idade, dá pra resolver em cartório, sem processo judicial — bem mais rápido.</div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="diferença extrajudicial cartório judicial justiça mais rápido barato">
+      <summary><span class="q-ico">+</span>Qual a diferença entre inventário “em cartório” e “na justiça”?</summary>
+      <div class="answer">
+        <span class="tag">Extrajudicial x Judicial</span>
+        <p><strong>Extrajudicial (em cartório):</strong> é o caminho rápido. Funciona quando todos os herdeiros são maiores, capazes e estão de acordo com a divisão, e não há testamento pendente. Sai por escritura pública, sem juiz, e pode levar semanas em vez de anos.</p>
+        <p><strong>Judicial (na justiça):</strong> é obrigatório quando há herdeiro menor ou incapaz, quando os herdeiros brigam sobre a partilha, ou em situações mais complexas. Aí o caso corre no fórum e depende do ritmo do Judiciário.</p>
+        <div class="tip">Sempre que possível, buscamos o caminho extrajudicial — é mais ágil, mais barato e menos desgastante pra família.</div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="prazo 60 dias abrir multa atraso itcmd espólio">
+      <summary><span class="q-ico">+</span>Tem prazo pra abrir o inventário? O que acontece se eu atrasar?</summary>
+      <div class="answer">
+        <span class="tag">Prazos</span>
+        <p><strong>Sim: o prazo é de 60 dias a partir do falecimento</strong> para dar início ao inventário. Passou disso, não acabou o mundo — mas pode gerar <strong>multa sobre o imposto (ITCMD)</strong>, que varia de estado para estado.</p>
+        <p>Ou seja: o atraso não impede fazer o inventário depois, só costuma deixá-lo mais caro. Por isso, quanto antes começar, melhor pro bolso.</p>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="quanto custa preço valor honorários itcmd custas cartório imposto">
+      <summary><span class="q-ico">+</span>Quanto custa fazer um inventário?</summary>
+      <div class="answer">
+        <span class="tag">Custos</span>
+        <p>Depende do valor dos bens, mas o custo se divide basicamente em três partes:</p>
+        <p><strong>1. ITCMD</strong> — o imposto sobre a herança, que fica entre <strong>2% e 8%</strong> do valor dos bens, dependendo do estado.<br>
+        <strong>2. Custas do cartório</strong> (no extrajudicial) ou custas judiciais (na justiça).<br>
+        <strong>3. Honorários do advogado</strong>, que é obrigatório nos dois caminhos.</p>
+        <div class="tip">Cada caso é diferente. A gente faz uma análise gratuita e te dá uma estimativa real antes de qualquer decisão.</div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="itcmd imposto quem paga estado alíquota transmissão causa mortis">
+      <summary><span class="q-ico">+</span>O que é esse tal de ITCMD e quem paga?</summary>
+      <div class="answer">
+        <span class="tag">Imposto</span>
+        <p>ITCMD é o <strong>Imposto sobre Transmissão Causa Mortis e Doação</strong> — em português claro, o imposto que incide quando se recebe uma herança (ou uma doação). Quem paga são <strong>os herdeiros</strong>, normalmente na proporção do que cada um recebe.</p>
+        <p>Ele é <strong>estadual</strong>, então a alíquota muda conforme o estado (de 2% a 8%). E é importante: <strong>sem o pagamento do ITCMD, o cartório não lavra a escritura</strong> e o juiz não homologa a partilha. É a chave que destrava tudo.</p>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="morar usar imóvel antes terminar aluguel herdeiro posse">
+      <summary><span class="q-ico">+</span>Posso morar ou usar o imóvel antes do inventário terminar?</summary>
+      <div class="answer">
+        <span class="tag">Uso dos bens</span>
+        <p><strong>Em geral, sim</strong> — principalmente quem já morava lá. Mas com uma ressalva importante: o imóvel ainda pertence a <em>todos</em> os herdeiros até a partilha. Então usá-lo sozinho, alugar ou fazer benfeitorias sem combinar com os demais pode gerar briga (e até obrigação de pagar “aluguel” aos outros herdeiros).</p>
+        <p>O ideal é alinhar tudo por escrito entre os herdeiros enquanto o inventário corre, pra ninguém se sentir prejudicado.</p>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="testamento muda alguma coisa herdeiro necessário legítima registro">
+      <summary><span class="q-ico">+</span>E se tiver testamento? Muda alguma coisa?</summary>
+      <div class="answer">
+        <span class="tag">Testamento</span>
+        <p>Muda o caminho, sim. Havendo testamento, ele precisa passar por uma etapa de conferência (registro/cumprimento) antes da partilha. Em muitos casos isso leva o inventário para a via judicial, embora hoje já existam situações em que, com testamento já aprovado, dá pra seguir pelo cartório.</p>
+        <p>Vale lembrar também que o testamento tem limite: se a pessoa tinha <strong>herdeiros necessários</strong> (filhos, cônjuge, pais), metade dos bens — a “legítima” — é deles por lei, independentemente do que o testamento diga.</p>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="faq" data-k="herdeiro não quer assinar sumiu discordar litígio judicial briga">
+      <summary><span class="q-ico">+</span>Um herdeiro não quer assinar (ou sumiu). E agora?</summary>
+      <div class="answer">
+        <span class="tag">Conflitos</span>
+        <p>Não trava tudo — só muda o caminho. Se um herdeiro <strong>discorda da divisão ou se recusa a colaborar</strong>, o inventário deixa de poder ser feito em cartório e vai para a <strong>justiça</strong>, onde o juiz decide a partilha.</p>
+        <p>Se o herdeiro simplesmente <strong>sumiu</strong> ou está em local desconhecido, também há solução: ele é citado por edital e o processo segue. Ou seja, ninguém consegue “segurar” a herança dos outros pra sempre.</p>
+      </div>
+    </details>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="group-title">Regularização de Imóveis</div>
+    <div class="faq">
+
+    <details data-cat="imoveis" data-type="faq" data-k="contrato de gaveta comprei imóvel meu regularizar adjudicação compulsória escritura">
+      <summary><span class="q-ico">+</span>Comprei um imóvel só com “contrato de gaveta”. Ele é meu? Como regularizo?</summary>
+      <div class="answer">
+        <span class="tag">Contrato de gaveta</span>
+        <p>Na prática você pagou e mora nele — mas <strong>oficialmente o imóvel ainda não é seu</strong>. No Brasil, dono é quem está registrado na matrícula do imóvel. O contrato de gaveta prova que você comprou, mas não transfere a propriedade sozinho.</p>
+        <p>A boa notícia é que dá pra regularizar. Se o vendedor sumiu, morreu ou se recusa a passar a escritura, existe a <strong>adjudicação compulsória</strong> — um procedimento (hoje até extrajudicial em muitos casos) para forçar a transferência e colocar o imóvel no seu nome.</p>
+        <div class="tip">Guarde tudo: contrato, comprovantes de pagamento e de que você mora lá. Esses documentos são ouro na hora de regularizar.</div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="usucapião o que é direito posse anos tempo propriedade">
+      <summary><span class="q-ico">+</span>O que é usucapião e quando eu tenho direito?</summary>
+      <div class="answer">
+        <span class="tag">Usucapião</span>
+        <p>Usucapião é o direito de <strong>virar dono de um imóvel por tê-lo ocupado por muitos anos</strong>, como se fosse seu, sem que ninguém contestasse. A lei entende que quem cuida, mora e dá função à propriedade por tempo suficiente merece o título.</p>
+        <p>O tempo necessário varia conforme o caso — pode ir de 2 a 15 anos — dependendo de coisas como você morar no imóvel, ter feito melhorias, ter um documento de compra, e se pagou os impostos. Cada modalidade tem seus requisitos.</p>
+        <div class="tip">Nem todo imóvel pode ser usucapido (imóvel público, por exemplo, não). Vale conferir o seu caso antes.</div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="usucapião extrajudicial cartório sem justiça mais rápido processo ata notarial">
+      <summary><span class="q-ico">+</span>Moro no imóvel há anos e não tenho escritura. Dá pra regularizar sem ir à justiça?</summary>
+      <div class="answer">
+        <span class="tag">Usucapião extrajudicial</span>
+        <p><strong>Muitas vezes, sim.</strong> Desde 2015 existe a <strong>usucapião extrajudicial</strong>, feita direto no <strong>Cartório de Registro de Imóveis</strong>, sem precisar de um processo judicial demorado.</p>
+        <p>Ela exige alguns documentos — como uma <strong>ata notarial</strong> (o tabelião atesta seu tempo de posse), uma planta com memorial descritivo assinada por profissional habilitado, e a concordância dos vizinhos confrontantes. Quando está tudo redondinho, é bem mais rápido que a via judicial.</p>
+        <div class="tip">Se algum vizinho ou antigo dono não concordar, o caso pode precisar migrar pra justiça — mas ainda assim vale começar pela tentativa no cartório.</div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="escritura matrícula registro diferença dono propriedade cartório">
+      <summary><span class="q-ico">+</span>Qual a diferença entre escritura, matrícula e registro?</summary>
+      <div class="answer">
+        <span class="tag">Conceitos básicos</span>
+        <p>Essa confusão é super comum. Em resumo:</p>
+        <p><strong>Escritura</strong> é o documento feito no Cartório de Notas que formaliza o negócio (a compra e venda, por exemplo). <strong>Matrícula</strong> é a “certidão de nascimento” do imóvel: um número único no Cartório de Registro de Imóveis onde fica registrada toda a história dele. <strong>Registro</strong> é o ato de averbar a escritura nessa matrícula.</p>
+        <p>A regra de ouro: <strong>“só é dono quem registra”.</strong> Ter só a escritura na gaveta, sem levar ao registro, não te faz oficialmente proprietário.</p>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="área terreno errada diferente matrícula retificação medida georreferenciamento">
+      <summary><span class="q-ico">+</span>A área do meu terreno na matrícula está diferente da real. Como corrijo?</summary>
+      <div class="answer">
+        <span class="tag">Retificação de área</span>
+        <p>Isso acontece bastante em imóveis antigos, onde a medida no papel não bate com a realidade. O caminho é a <strong>retificação de área</strong>: um procedimento para corrigir a metragem e os limites registrados na matrícula.</p>
+        <p>Normalmente envolve um <strong>levantamento técnico (planta e memorial descritivo)</strong> feito por profissional habilitado e a concordância dos vizinhos confrontantes. Na maioria dos casos é resolvido no próprio Cartório de Registro de Imóveis, sem ação judicial.</p>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="reurb loteamento irregular regularização fundiária prefeitura município legitimação">
+      <summary><span class="q-ico">+</span>O que é REURB? Minha casa está num “loteamento irregular”.</summary>
+      <div class="answer">
+        <span class="tag">REURB</span>
+        <p>REURB é a <strong>Regularização Fundiária Urbana</strong> — um conjunto de regras criado pra dar título a quem vive em loteamentos e bairros que nunca foram regularizados. É a saída para milhões de famílias que têm a casa, mas não têm o papel.</p>
+        <p>Ela tem duas modalidades: a <strong>REURB-S</strong>, para população de baixa renda (com custos reduzidos ou gratuitos), e a <strong>REURB-E</strong>, para os demais casos. O pedido normalmente passa pela <strong>Prefeitura/Município</strong>, então vale checar se a sua cidade já tem programa de REURB.</p>
+        <div class="tip">No fim do processo você recebe um título registrado — e aí sim a casa é oficialmente sua, podendo ser vendida, financiada ou deixada de herança sem dor de cabeça.</div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="faq" data-k="sobrepartilha bem esquecido descoberto depois inventário encerrado reabrir">
+      <summary><span class="q-ico">+</span>Descobrimos um bem depois que o inventário já tinha acabado. E agora?</summary>
+      <div class="answer">
+        <span class="tag">Sobrepartilha</span>
+        <p>Calma, não precisa refazer tudo do zero. Para bens que <strong>ficaram de fora ou foram descobertos depois</strong> — uma conta esquecida, um terreno que ninguém sabia, uma parte de imóvel — existe a <strong>sobrepartilha</strong>.</p>
+        <p>É um procedimento mais enxuto, só para dividir aquilo que ficou pendente, sem reabrir todo o inventário anterior. Rápido e específico pro que faltou.</p>
+      </div>
+    </details>
+    </div>
+  </section>
+
+  <div class="divider"><span>Artigos do Blog</span></div>
+  <p class="lead-sub" id="artigos-lead">Histórias reais e explicações completas. Clique para ler o artigo inteiro.</p>
+
+  <section class="sec">
+    <div class="group-title">Leitura na íntegra</div>
+    <div class="faq">
+
+    <details data-cat="inventario" data-type="artigo" data-k="herança com dívida herdeiro paga dívidas falecido responde patrimônio pessoal forças da herança limite espólio credores financiamento cartão empréstimo aceitar renunciar 1792 1997 código civil">
+      <summary><span class="q-ico">+</span>Herança Vem com Dívida? Até Onde os Herdeiros São Obrigados a Pagar</summary>
+      <div class="meta"><span class="badge">Herança</span></div>
+      <div class="answer">
+        <p>Uma das maiores preocupações de quem vai receber uma herança é esta: “e se a pessoa deixou mais dívida do que bem? Eu vou ter que pagar do meu bolso?”. Fica tranquilo — a resposta, na imensa maioria dos casos, é <strong>não</strong>. A lei brasileira protege o herdeiro justamente para que ninguém saia da própria vida financeira arruinado por causa de uma herança. Vamos explicar direitinho.</p>
+        <h4>A regra de ouro: você só responde “até onde a herança dá”</h4>
+        <p>O ponto mais importante está no <strong>art. 1.792 do Código Civil</strong>: o herdeiro <strong>não responde por dívidas maiores do que o valor da herança</strong>. Ou seja, o limite é o que foi deixado. Se o falecido deixou R$ 100 mil em bens e R$ 300 mil em dívidas, os herdeiros perdem, no máximo, aqueles R$ 100 mil — e não colocam um centavo do próprio patrimônio para cobrir o resto.</p>
+        <h4>Quem paga as dívidas é a herança, não você</h4>
+        <p>Antes da partilha, os bens do falecido formam o <strong>espólio</strong> — uma espécie de “bolso coletivo” que existe justamente para acertar as contas. Segundo o <strong>art. 1.997 do Código Civil</strong>, é a herança que responde pelas dívidas. Na prática, isso significa que primeiro se pagam os credores com os bens deixados; só o que sobrar é dividido entre os herdeiros. Você não recebe a herança “por cima” das dívidas — recebe o que restar depois delas.</p>
+        <h4>E quando a dívida aparece só depois da partilha?</h4>
+        <p>Se um credor surge depois que os bens já foram divididos, ele ainda pode cobrar — mas cada herdeiro responde <strong>apenas na proporção do que recebeu</strong>. Quem ficou com 25% da herança responde por, no máximo, 25% daquela dívida, e sempre dentro do valor que herdou. Ninguém paga a conta dos outros.</p>
+        <h4>Cuidados que evitam dor de cabeça</h4>
+        <ul>
+          <li><strong>Não “misture” os bens.</strong> Vender ou usar bens do falecido antes de acertar as dívidas pode complicar e, em alguns casos, fazer você responder por valores que não deveria.</li>
+          <li><strong>Levante tudo:</strong> empréstimos, financiamentos, cartões, contas em aberto. Uma dívida escondida atrapalha a partilha lá na frente.</li>
+          <li><strong>Herança muito endividada?</strong> Existe a opção de <strong>renunciar</strong> (abrir mão da herança) — mas isso tem consequências e deve ser avaliado caso a caso.</li>
+        </ul>
+        <p>No fim das contas, herdar dívida não é uma armadilha: é uma conta que se acerta com os próprios bens deixados, dentro de um limite claro. O segredo é organizar tudo com orientação certa para não pagar mais do que a lei exige.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20li%20o%20artigo%20sobre%20herança%20com%20dívida%20e%20gostaria%20de%20orientação.">Tirar dúvidas sobre herança com dívida →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="artigo" data-k="herdei imóvel quero vender partilha inventário matrícula itcmd cessão de direitos hereditários transferir nome escritura formal de partilha alvará">
+      <summary><span class="q-ico">+</span>Herdei um Imóvel e Quero Vender: o Passo a Passo pra Colocar no Meu Nome Primeiro</summary>
+      <div class="meta"><span class="badge">Imóveis</span></div>
+      <div class="answer">
+        <p>Recebeu um imóvel de herança e já apareceu um comprador? Ótimo — mas tem uma ordem a seguir. Enquanto a herança não é formalizada, o imóvel ainda está, oficialmente, no nome de quem faleceu (no “espólio”). E ninguém consegue vender o que ainda não está no seu nome. A boa notícia: o caminho é conhecido e, na maioria dos casos, tranquilo.</p>
+        <h4>Por que não dá pra vender “direto”</h4>
+        <p>No Brasil, dono é quem está registrado na matrícula do imóvel. Como a matrícula ainda aponta o falecido, o cartório não registra uma venda feita pelos herdeiros antes da partilha. Primeiro o imóvel precisa “passar” para os herdeiros; depois, sim, pode ser vendido.</p>
+        <h4>O passo a passo</h4>
+        <ul>
+          <li><strong>1. Fazer o inventário</strong> — em cartório (extrajudicial), se todos os herdeiros forem maiores, concordarem e não houver testamento pendente; ou na justiça, nos demais casos.</li>
+          <li><strong>2. Pagar o ITCMD</strong> — o imposto sobre a herança (de 2% a 8%, conforme o estado). Sem ele, a partilha não se conclui.</li>
+          <li><strong>3. Registrar a partilha na matrícula</strong> — leva-se o formal de partilha (ou a escritura de partilha) ao Cartório de Registro de Imóveis. É aqui que o imóvel finalmente entra no nome dos herdeiros.</li>
+          <li><strong>4. Vender</strong> — agora o imóvel é seu (ou de todos os herdeiros) e pode ser vendido normalmente.</li>
+        </ul>
+        <h4>E se eu não quiser esperar todo o inventário?</h4>
+        <p>Existem dois atalhos, dependendo do caso: a <strong>cessão de direitos hereditários</strong>, feita por escritura pública, em que o comprador “entra no lugar” do herdeiro na herança (com a concordância dos demais herdeiros e, quando for o caso, do cônjuge); e a <strong>venda durante o inventário com autorização judicial</strong> (alvará), útil quando há urgência ou risco de perder o negócio.</p>
+        <h4>Atenção quando há vários herdeiros</h4>
+        <p>Se o imóvel é de mais de um herdeiro, <strong>todos precisam concordar</strong> com a venda. Sozinho, cada herdeiro só pode negociar a sua fração ideal — o que costuma afastar compradores. Alinhar a decisão da família antes evita negócio desfeito lá na frente.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20herdei%20um%20imóvel%20e%20quero%20vender.%20Podem%20me%20orientar?">Quero vender um imóvel herdado →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="artigo" data-k="guia prático inventário documentos judicial extrajudicial itcmd advogado passo a passo">
+      <summary><span class="q-ico">+</span>Guia Prático: Como Enfrentar o Inventário com Clareza e Tranquilidade</summary>
+      <div class="meta"><span class="badge">Inventário</span></div>
+      <div class="answer">
+        <p>Perder um ente querido é uma das experiências mais dolorosas que enfrentamos. Em meio ao luto, ainda é necessário lidar com questões legais e burocráticas, como o inventário. Este processo, embora essencial para a partilha dos bens, não precisa se transformar em mais um fardo emocional. Reunimos aqui as informações que ajudam você a atravessar essa etapa com mais clareza.</p>
+        <h4>Passo 1: Reúna todos os documentos necessários</h4>
+        <p>Organizar a documentação desde o início economiza tempo e evita retrabalho. Tenha em mãos:</p>
+        <ul>
+          <li>Certidão de óbito do falecido;</li>
+          <li>RG e CPF do falecido;</li>
+          <li>Escritura ou matrícula dos imóveis;</li>
+          <li>Extratos e documentos bancários;</li>
+          <li>Comprovantes de dívidas ou ativos financeiros.</li>
+        </ul>
+        <h4>Passo 2: Defina se o inventário será judicial ou extrajudicial</h4>
+        <p><strong>Judicial:</strong> necessário quando há conflito entre herdeiros ou testamento; corre perante o juiz e tende a ser mais demorado. <strong>Extrajudicial:</strong> mais ágil e econômico, feito em cartório quando todos concordam e não há pendências tributárias.</p>
+        <h4>Passo 3: Consulte um advogado especializado</h4>
+        <p>O profissional analisa os bens, orienta a divisão entre os herdeiros, calcula impostos como o ITCMD e define a estratégia mais eficaz para concluir o processo.</p>
+        <h4>Passo 4: Resolva pendências financeiras e tributárias</h4>
+        <p>Quitar dívidas do falecido (empréstimos, financiamentos, cartões) e regularizar o ITCMD é indispensável para que a partilha final seja efetivada sem problemas futuros.</p>
+        <h4>Conclusão</h4>
+        <p>Com organização, apoio de um advogado especializado e atenção aos detalhes, é possível passar por essa fase com mais leveza. Cada passo dado agora é uma forma de cuidar do futuro e preservar as memórias de quem amamos.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20orientação%20sobre%20inventário.">Falar com um especialista sobre inventário →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="artigo" data-k="usucapião regularizar propriedade esforço posse contínua boa fé requisitos escritura herança">
+      <summary><span class="q-ico">+</span>Como o Usucapião Pode Regularizar o Sonho de uma Propriedade Conquistada com Esforço</summary>
+      <div class="meta"><span class="badge">Imóveis</span></div>
+      <div class="answer">
+        <p>A história de muitas famílias é marcada por sacrifício e trabalho duro para conquistar um lar. Mas, depois de anos, é comum que a propriedade ainda não esteja regularizada — o que gera insegurança jurídica e dificuldade para transmitir o bem às próximas gerações. O usucapião pode transformar essa conquista em segurança jurídica.</p>
+        <h4>A propriedade ainda não está regularizada?</h4>
+        <p>Viver num imóvel ocupado e cuidado por anos, mas sem escritura, pode trazer problemas: insegurança jurídica (não dá para vender, financiar ou transmitir com facilidade), dificuldade na hora da herança e, em casos extremos, até risco de perda.</p>
+        <h4>O que é usucapião e como ele ajuda</h4>
+        <p>É um direito previsto em lei que permite regularizar a propriedade de quem a utiliza de forma contínua, pacífica e de boa-fé por um determinado período. Em outras palavras, <strong>transforma a posse em propriedade</strong>, garantindo segurança jurídica ao ocupante.</p>
+        <h4>Requisitos principais</h4>
+        <ul>
+          <li><strong>Ocupação contínua:</strong> sem interrupções pelo período exigido em lei;</li>
+          <li><strong>Boa-fé:</strong> ocupar acreditando ter direito à posse;</li>
+          <li><strong>Tempo de posse:</strong> em geral de 5 a 15 anos, conforme o tipo (urbano, rural, familiar etc.);</li>
+          <li><strong>Provas:</strong> recibos, contas pagas, testemunhos e outros documentos que comprovem a relação com o imóvel.</li>
+        </ul>
+        <h4>Conclusão</h4>
+        <p>Regularizar por usucapião vai além de resolver uma pendência: é honrar o esforço de uma vida e proteger o futuro da família, garantindo que o patrimônio possa ser transmitido sem preocupações. Se é o caso da sua família, não deixe para depois.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20saber%20se%20meu%20imóvel%20pode%20ser%20regularizado%20por%20usucapião.">Ver se o seu imóvel se enquadra →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="artigo" data-k="renúncia herança renunciar abrir mão dívidas cônjuge redistribuição herdeiros">
+      <summary><span class="q-ico">+</span>O Que Acontece Com a Herança Quando Alguém Renuncia?</summary>
+      <div class="meta"><span class="badge">Herança</span></div>
+      <div class="answer">
+        <p>O que acontece com o patrimônio quando alguém da família decide abrir mão de sua parte na herança? Parece simples, mas pode ser mais complicado do que parece — e impactar diretamente você ou sua família.</p>
+        <h4>Por que alguém abre mão de uma herança?</h4>
+        <p>Nem sempre herdar é vantajoso. Se a pessoa deixa um patrimônio cheio de dívidas, bens irregulares ou problemas legais, o herdeiro pode acabar se enrolando com processos, impostos e complicações. Nesses casos, às vezes a melhor decisão é renunciar.</p>
+        <h4>Para onde vai a parte de quem renuncia?</h4>
+        <p>Essa fatia não “some” — ela é redistribuída. Se um dos quatro filhos renuncia, por exemplo, a parte dele é dividida entre os outros três irmãos. Mas atenção: <strong>havendo cônjuge com direito à herança, a parte renunciada pode ser dividida entre os irmãos e o cônjuge</strong>. Muita gente não sabe disso e se surpreende depois.</p>
+        <h4>Uma estratégia que pode economizar</h4>
+        <p>Em certos casos, renunciar é usado de forma inteligente — por exemplo, para facilitar a venda de um imóvel herdado e evitar custos extras, resolvendo a situação de forma mais rápida.</p>
+        <h4>O que ter em mente antes de renunciar</h4>
+        <ul>
+          <li>Entenda exatamente para onde vai a sua parte;</li>
+          <li>Procure orientação profissional — cada caso é único;</li>
+          <li>Pense no longo prazo, não só no alívio imediato.</li>
+        </ul>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20tenho%20dúvidas%20sobre%20renúncia%20de%20herança.">Tirar dúvidas sobre renúncia →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="artigo" data-k="alvará judicial fgts pis pasep saque valores baixos sem inventário artigo 666 cpc joana">
+      <summary><span class="q-ico">+</span>O Alvará que Mudou Tudo — Uma Solução Simples e Transformadora</summary>
+      <div class="meta"><span class="badge">Inventário</span></div>
+      <div class="answer">
+        <p>Muitas famílias enfrentam dificuldades financeiras após o falecimento de um ente querido, especialmente quando há valores como FGTS e PIS/PASEP deixados para trás. Existe uma solução mais prática do que o inventário: o <strong>alvará judicial</strong>.</p>
+        <h4>O que é o alvará judicial?</h4>
+        <p>É um documento emitido pela Justiça que permite o saque de valores deixados pelo falecido — como FGTS e PIS/PASEP — sem precisar abrir um inventário. Esse recurso é regulamentado pelo <strong>art. 666 do Código de Processo Civil (Lei nº 13.105/2015)</strong> e é ideal quando os valores são baixos ou há acordo entre os herdeiros.</p>
+        <h4>Quando utilizar</h4>
+        <ul>
+          <li>Saque de valores em contas bancárias ou benefícios trabalhistas;</li>
+          <li>Liberação de FGTS e PIS/PASEP;</li>
+          <li>Concordância entre herdeiros e ausência de bens imóveis.</li>
+        </ul>
+        <h4>O caso de Joana</h4>
+        <p>Após o falecimento do marido, Joana encontrou no alvará judicial a solução para acessar os recursos deixados por ele. Com o documento, sacou os valores em poucas semanas, quitou dívidas e garantiu estabilidade para a família.</p>
+        <h4>Como obter</h4>
+        <p>Com a ajuda de um advogado, os herdeiros entram com um pedido judicial demonstrando a inexistência de outros bens e a concordância entre os envolvidos. É um processo relativamente simples.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20saber%20sobre%20alvará%20judicial%20para%20saque%20de%20FGTS/PIS.">Saber se o alvará serve pro meu caso →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="artigo" data-k="direito real de habitação inventário viúva idoso moradia vitalícia artigos 1411 1416 código civil">
+      <summary><span class="q-ico">+</span>Direito Real de Habitação em Inventários — Proteja Quem Você Ama</summary>
+      <div class="meta"><span class="badge">Inventário</span></div>
+      <div class="answer">
+        <p>Boa parte dos conflitos familiares após uma morte envolve disputas por imóveis. O <strong>Direito Real de Habitação (arts. 1.411 a 1.416 do Código Civil)</strong> é uma forma de proteger o familiar idoso ou vulnerável durante e após o inventário.</p>
+        <h4>O que é e como funciona</h4>
+        <ul>
+          <li><strong>Direito vitalício de moradia gratuita</strong> em imóvel que pertence aos herdeiros;</li>
+          <li>Diferente do usufruto: não envolve custos e é mais simples de implementar;</li>
+          <li>Pelo art. 1.411 do CC, o titular tem direito de habitar o imóvel, sem poder alugá-lo ou cedê-lo.</li>
+        </ul>
+        <h4>Como garantir esse direito</h4>
+        <p>No inventário (judicial ou extrajudicial), faz-se um pedido específico, com comprovação de residência e, quando for o caso, laudo médico. Para valer contra terceiros, é importante o registro em cartório.</p>
+        <h4>Vantagens para a família</h4>
+        <ul>
+          <li>Segurança emocional: seu familiar não vira “inquilino” da própria casa;</li>
+          <li>Proteção financeira: nenhum herdeiro pode alugar ou vender o imóvel;</li>
+          <li>Processo ágil: pode ser resolvido no inventário extrajudicial.</li>
+        </ul>
+        <h4>Cuidados importantes</h4>
+        <p>Não vale para imóveis alugados, exige assessoria jurídica especializada e precisa ser muito bem redigido para evitar brechas. Em muitos casos, dá para incluir esse direito mesmo com o inventário já em andamento.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20entender%20o%20direito%20real%20de%20habitação%20no%20meu%20caso.">Ver se o seu caso se encaixa →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="imoveis" data-type="artigo" data-k="usucapião especial familiar cônjuge desaparece abandono de lar artigo 1240-a lei 12424 2011 250 metros dois anos">
+      <summary><span class="q-ico">+</span>Usucapião Especial Familiar: Regularize Seu Apartamento Mesmo Quando o Cônjuge Desaparece</summary>
+      <div class="meta"><span class="badge">Imóveis</span></div>
+      <div class="answer">
+        <p>A usucapião especial familiar permite regularizar a posse de imóveis ocupados há anos, sendo especialmente relevante em situações de abandono de lar — como no caso de Dona Maria, que continuou no imóvel após o companheiro desaparecer.</p>
+        <h4>O que diz a lei</h4>
+        <p>Está prevista no <strong>art. 1.240-A do Código Civil</strong>, incluído pela <strong>Lei nº 12.424/2011</strong>. A pessoa pode adquirir a propriedade de um imóvel urbano se:</p>
+        <ul>
+          <li>Ocupar o imóvel de forma contínua e ininterrupta por pelo menos <strong>2 anos</strong>;</li>
+          <li>Utilizá-lo como <strong>residência principal</strong>;</li>
+          <li>Não houver disputa judicial sobre o bem;</li>
+          <li>O imóvel tiver área máxima de <strong>250 m²</strong>;</li>
+          <li>O requerente não for proprietário de outro imóvel urbano ou rural.</li>
+        </ul>
+        <h4>Vantagens</h4>
+        <p>Segurança jurídica (elimina o risco de despejo ou disputas futuras), valorização do imóvel e acesso a programas de financiamento e crédito imobiliário.</p>
+        <h4>Desafios</h4>
+        <p>O processo pode levar tempo, envolve custos iniciais (honorários e taxas) e exige análise cuidadosa, já que nem todos os casos se enquadram nos critérios da lei.</p>
+        <h4>Conclusão</h4>
+        <p>Quando o cônjuge desaparece, quem permaneceu no imóvel pode solicitar a transferência da propriedade para seu nome, garantindo estabilidade para si e para os filhos. Assim como Dona Maria, você pode conquistar o direito de chamar seu lar de “meu”.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20saber%20sobre%20usucapião%20especial%20familiar.">Consultar meu caso →</a></div>
+      </div>
+    </details>
+
+    <details data-cat="inventario" data-type="artigo" data-k="namoro união estável viver junto cinco anos artigo 1723 código civil herança companheiro contrato">
+      <summary><span class="q-ico">+</span>Namoro ou União Estável? O Que Muda Quando se Vive Junto Há Mais de 5 Anos</summary>
+      <div class="meta"><span class="badge">Sucessão</span></div>
+      <div class="answer">
+        <p>Muitos casais namoram por anos, dividem a vida e constroem uma história juntos, mas acreditam que, por nunca terem casado, continuam “só namorando”. O que poucos sabem é que a lei pode entender que se trata de <strong>união estável</strong>, com efeitos parecidos aos do casamento — e isso é decisivo em caso de separação ou falecimento.</p>
+        <h4>O que é união estável?</h4>
+        <p>Segundo o <strong>art. 1.723 do Código Civil</strong>, é a convivência pública, contínua e duradoura entre duas pessoas com o objetivo de constituir família. Mesmo sem casamento ou contrato, a Justiça pode reconhecer o relacionamento como entidade familiar.</p>
+        <h4>Quando um namoro vira união estável?</h4>
+        <p>Não há prazo mínimo em lei, mas há indícios fortes: morar sob o mesmo teto, dividir contas e responsabilidades, adquirir bens em comum, reconhecimento social da relação e filhos em comum.</p>
+        <h4>Um caso realista</h4>
+        <p>Camila e André estavam juntos há 7 anos, moravam juntos, dividiam despesas e compraram um carro em conjunto. Quando André faleceu, a família dele se apropriou dos bens alegando que era “só namoro”. Sem contrato ou documentos que comprovassem a união, Camila teve que ir à Justiça — com custo e demora — para garantir seus direitos.</p>
+        <h4>Como formalizar e por que importa</h4>
+        <p>Um <strong>contrato de união estável</strong> em cartório (com cláusulas sobre patrimônio e regime de bens), o registro público e instrumentos como testamento fortalecem a prova e a proteção. Sem isso, o companheiro sobrevivente pode até ser excluído da herança se a família contestar. O STF equiparou os direitos sucessórios de cônjuge e companheiro, mas o reconhecimento da união continua essencial para garantir meação e herança.</p>
+        <div class="art-cta"><a href="https://wa.me/5511993233066?text=Olá,%20quero%20saber%20sobre%20união%20estável%20e%20direitos%20sucessórios.">Proteger a minha relação →</a></div>
+      </div>
+    </details>
+    </div>
+  </section>
+
+  <div class="noresult" id="noresult">
+    <p>Não achamos nada com esse termo.<br>Que tal mandar sua dúvida direto pra gente no WhatsApp?</p>
+  </div>
+
+</main>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Sua dúvida não estava aqui?</h2>
+  <p>Cada caso é único. Descreva sua situação e receba uma análise gratuita, sem compromisso — em até 24 horas.</p>
+  <a href="https://wa.me/5511993233066?text=Olá,%20li%20a%20página%20de%20dúvidas%20e%20gostaria%20de%20uma%20análise%20do%20meu%20caso." class="btn-dark" target="_blank">💬 Falar no WhatsApp</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">
+        <img src="logoT.png" alt="Inventariano" style="height:90px;width:auto;display:block;margin-bottom:0.5rem;" />
+        <span style="font-family:'Lato',sans-serif;font-size:0.8rem;font-weight:300;color:rgba(255,255,255,0.45);letter-spacing:0.08em;text-transform:uppercase;">Motta Alves Sociedade de Advogados</span>
+      </div>
+      <p style="margin-top:0.8rem;">Especialistas em inventários judiciais e extrajudiciais, regularização de imóveis e planejamento sucessório.</p>
+      <p style="margin-top:1rem;">
+        📍 Rua Prof. Abraão de Morais, 1919<br/>
+        Jardim Saúde – São Paulo/SP<br/>
+        CEP 04123-011
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Conteúdo</h4>
+      <ul>
+        <li><a href="/#servicos">Serviços</a></li>
+        <li><a href="/inventario.html">Inventário</a></li>
+        <li><a href="/regularizacao.html">Regularização</a></li>
+        <li><a href="/blog.html">Dúvidas &amp; Blog</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Nossa Equipe</h4>
+      <ul>
+        <li style="margin-bottom:1.2rem;">
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dr. Vanderlei Alves</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 270182</span><br/>
+          <a href="https://wa.me/5511993233066" target="_blank">(11) 99323-3066</a><br/>
+          <a href="mailto:dr.vanderlei.alves@inventariano.com.br">dr.vanderlei.alves@inventariano.com.br</a>
+        </li>
+        <li>
+          <span style="display:block;font-weight:700;color:rgba(255,255,255,0.75);font-size:0.88rem;">Dra. Maria Antonia Motta</span>
+          <span style="color:rgba(255,255,255,0.35);font-size:0.78rem;">OAB/SP 146857</span><br/>
+          <a href="https://wa.me/5511991818762" target="_blank">(11) 99181-8762</a><br/>
+          <a href="mailto:dra.maria.antonia@inventariano.com.br">dra.maria.antonia@inventariano.com.br</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Motta Alves Sociedade de Advogados. Todos os direitos reservados.</span>
+    <span>inventariano.com.br</span>
+  </div>
+  <p class="footer-disc">Conteúdo meramente informativo — não substitui a orientação jurídica individualizada. Cada caso deve ser analisado por um advogado. Site informativo conforme Provimento 205/2021 da OAB.</p>
+</footer>
+
+<script>
+  const allDetails = Array.from(document.querySelectorAll('details'));
+  allDetails.forEach(d => d.addEventListener('toggle', () => {
+    if(d.open){ allDetails.forEach(o => { if(o!==d) o.open=false; }); }
+  }));
+
+  const chips = document.querySelectorAll('.chip');
+  const search = document.getElementById('search');
+  const noresult = document.getElementById('noresult');
+  const sections = document.querySelectorAll('.sec');
+  const divider = document.querySelector('.divider');
+  const artigosLead = document.getElementById('artigos-lead');
+  let activeFilter = 'all';
+
+  function apply(){
+    const term = search.value.trim().toLowerCase();
+    let visible = 0;
+    allDetails.forEach(d => {
+      const cat = d.dataset.cat, type = d.dataset.type;
+      const keys = (d.dataset.k + ' ' + d.textContent).toLowerCase();
+      let matchFilter;
+      if(activeFilter==='all') matchFilter = true;
+      else if(activeFilter==='artigo') matchFilter = type==='artigo';
+      else matchFilter = cat===activeFilter;
+      const matchTerm = !term || keys.includes(term);
+      const show = matchFilter && matchTerm;
+      d.style.display = show ? '' : 'none';
+      if(show) visible++;
+    });
+    sections.forEach(sec => {
+      const any = Array.from(sec.querySelectorAll('details')).some(d => d.style.display!=='none');
+      sec.style.display = any ? '' : 'none';
+    });
+    const anyArticle = allDetails.some(d => d.dataset.type==='artigo' && d.style.display!=='none');
+    if(divider) divider.style.display = anyArticle ? '' : 'none';
+    if(artigosLead) artigosLead.style.display = anyArticle ? '' : 'none';
+    noresult.style.display = visible===0 ? 'block' : 'none';
+  }
+
+  chips.forEach(c => c.addEventListener('click', () => {
+    chips.forEach(x => x.classList.remove('active'));
+    c.classList.add('active');
+    activeFilter = c.dataset.f;
+    apply();
+  }));
+  search.addEventListener('input', apply);
+</script>
+</body>
+</html>
