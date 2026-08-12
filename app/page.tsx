@@ -28,6 +28,9 @@ const calculadoras = [
   ["Calculadora de Partilha", "Simule a distribuição do patrimônio entre os interessados.", "/calculadora-de-partilha"],
   ["Custos de Inventário", "Tenha uma visão inicial dos principais custos envolvidos.", "/custos-de-inventario"],
   ["Prazo de Inventário", "Consulte informações e referências sobre prazos.", "/prazo-inventario"],
+  ["Lance Mínimo em Leilão", "Calcule o desconto real da 2ª praça somando comissão, ITBI e custos.", "/calculadora-lance-leilao"],
+  ["Usucapião — Prazo Restante", "Veja se você já completou o tempo de posse exigido e quanto falta.", "/calculadora-usucapiao"],
+  ["Vender Imóvel Herdado vs. Espólio", "Compare vender agora ou aguardar a partilha, com impostos e custos.", "/vender-imovel-herdado"],
 ];
 
 const passos = [
