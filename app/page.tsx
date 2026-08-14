@@ -60,6 +60,7 @@ export default function Home() {
             <a href="#servicos" className="text-sm uppercase tracking-[0.08em] text-white/75 transition hover:text-[#c9a84c]">Serviços</a>
             <a href="#calculadoras" className="text-sm uppercase tracking-[0.08em] text-white/75 transition hover:text-[#c9a84c]">Calculadoras</a>
             <a href="#como-funciona" className="text-sm uppercase tracking-[0.08em] text-white/75 transition hover:text-[#c9a84c]">Como Funciona</a>
+            <a href="#equipe" className="text-sm uppercase tracking-[0.08em] text-white/75 transition hover:text-[#c9a84c]">Equipe</a>
             <a href="#sobre" className="text-sm uppercase tracking-[0.08em] text-white/75 transition hover:text-[#c9a84c]">Sobre</a>
             <a href="#contato" className="rounded-sm bg-[#c9a84c] px-5 py-2.5 text-sm font-bold text-[#0e0e0e] transition hover:bg-[#e8c97a]">Consulta Gratuita</a>
           </nav>
@@ -189,6 +190,28 @@ export default function Home() {
               <p className="mt-3 text-[0.88rem] leading-[1.65] text-white/45">{desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* NOSSA EQUIPE */}
+      <section id="equipe" className="bg-[#f5f0e8] px-6 py-24 sm:px-[8%]">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-4 flex items-center justify-center gap-3 text-xs uppercase tracking-[0.2em] text-[#c9a84c]">
+            <span className="block h-px w-8 bg-[#c9a84c]" /> Quem cuida do seu caso <span className="block h-px w-8 bg-[#c9a84c]" />
+          </div>
+          <h2 className="text-center font-serif text-[clamp(1.8rem,3vw,2.8rem)] font-bold leading-[1.2]">
+            Nossa Equipe
+          </h2>
+          <p className="mx-auto mt-4 max-w-[560px] text-center leading-[1.7] text-[#6b6560]">
+            Advogados especializados em direito sucessório e regularização de imóveis — experiência, ética e compromisso com os seus direitos.
+          </p>
+          <div className="mt-12 overflow-hidden rounded-lg border border-[#c9a84c]/25 shadow-[0_20px_60px_-15px_rgba(14,14,14,0.4)]">
+            <img
+              src="/equipe.png"
+              alt="Equipe Motta Alves Sociedade de Advogados — Dra. Maria Antônia Motta (OAB/SP 146.857) e Dr. Vanderlei Alves (OAB/SP 270.182)"
+              className="h-auto w-full"
+            />
+          </div>
         </div>
       </section>
 
